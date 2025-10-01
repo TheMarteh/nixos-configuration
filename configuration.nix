@@ -30,6 +30,7 @@
     autoRepeatInterval = 35;
     windowManager.qtile.enable = true;
     displayManager.lightdm.enable = true;
+    # displayManager.lightdm.
   };
 
   # bluetooth gerelateerde shizzle
@@ -73,6 +74,7 @@
       _1password-cli
       _1password-gui
       bolt-launcher # osrs launcher
+      vivaldi
     ];
   };
 

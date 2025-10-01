@@ -35,7 +35,8 @@ in
     })
     configs;
 
-  wayland.windowManager.hyprland.enable = true
+  # wayland.windowManager.hyprland.enable = true;
+
   # xdg.configFile."qtile" = {
   #   source = create_symlink "${dotfiles}/qtile/";
   #   recursive = true;
