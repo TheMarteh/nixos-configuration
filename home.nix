@@ -6,6 +6,7 @@ let
   configs = {
     qtile = "qtile";
     nvim = "nvim";
+    hypr = "hypr";
   };
 in
 
@@ -35,7 +36,11 @@ in
     })
     configs;
 
-  # wayland.windowManager.hyprland.enable = true;
+  wayland.windowManager.hyprland = {
+  enable = true;
+  # optioneel: extra config
+  # settings = { ... };
+  };
 
   # xdg.configFile."qtile" = {
   #   source = create_symlink "${dotfiles}/qtile/";
