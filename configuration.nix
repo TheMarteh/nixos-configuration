@@ -22,16 +22,29 @@
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-  services.xserver = {
+  # --- HYPRLAND / WAYLAND SETUP ---
+
+  services.getty.autologinUser = "steal";
+  
+  programs.hyprland = {
     enable = true;
-    autoRepeatDelay = 200;
-    autoRepeatInterval = 35;
-    windowManager.qtile.enable = true;
-    displayManager.lightdm.enable = true;
-    # displayManager.lightdm.
+    xwayland.enable = true;
+    withUWSM = true;
   };
+
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command = "Hyprland";
+  #     };
+  #   };
+  # };
+
+  # Hyprland werkt goed met modern input
+  # programs.waybar.enable = true;     # Panel
+  # programs.wofi.enable = true;       # App launcher
+  # programs.swaybg.enable = true;     # Background
 
   # bluetooth gerelateerde shizzle
   hardware.bluetooth.enable = true;
@@ -91,6 +104,8 @@
     rofi
     docker
     kitty
+    waybar
+    hyprpaper
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

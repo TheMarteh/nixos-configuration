@@ -36,11 +36,29 @@ in
     })
     configs;
 
-  wayland.windowManager.hyprland = {
-  enable = true;
-  # optioneel: extra config
-  # settings = { ... };
-  };
+  # wayland.windowManager.hyprland = {
+  #   enable = true;
+  #   settings = {
+  #     monitor = "eDP-1,1920x1080@60,0x0,1";
+  #     exec-once = [
+  #       "waybar"
+  #       "wofi --show drun"
+  #     ];
+  #     input = {
+  #       kb_layout = "us";
+  #       follow_mouse = 1;
+  #     };
+  #     general = {
+  #       gaps_in = 5;
+  #       gaps_out = 10;
+  #       border_size = 2;
+  #     };
+  #     decoration = {
+  #       rounding = 8;
+  #       drop_shadow = true;
+  #     };
+  #   };
+  # };
 
   # xdg.configFile."qtile" = {
   #   source = create_symlink "${dotfiles}/qtile/";
@@ -61,5 +79,7 @@ in
     nodejs
     gcc
     neofetch
+    wofi
+    rofi
   ];
 }
