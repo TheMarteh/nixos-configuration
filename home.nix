@@ -7,6 +7,7 @@ let
     qtile = "qtile";
     nvim = "nvim";
     hypr = "hypr";
+    waybar = "waybar";
   };
 in
 
@@ -36,6 +37,7 @@ in
     shellAliases = {
       btw = "echo I use NixOS, btw";
       nrs = "sudo nixos-rebuild switch --flake ~/nixos-configuration#nixos-steal";
+      rfrwb = "pkill waybar && hyprctl dispatch exec waybar";
     };
   };
 

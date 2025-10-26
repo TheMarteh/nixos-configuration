@@ -1,0 +1,25 @@
+@define-color fg    #cdd6f4; 
+@define-color bg    #1a1b26; 
+
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+}
+
+window#waybar {
+    background-color: @bg;
+    color: @fg;
+}
+
+.modules-left {
+  margin-left: 8px;
+  color: @fg;
+}
