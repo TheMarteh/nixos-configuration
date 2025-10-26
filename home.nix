@@ -27,6 +27,9 @@ in
     enable = true;
     gitCredentialHelper.enable = true;
   };
+
+  programs.docker-cli.enable = true;
+  programs.lazydocker.enable = true;
   
   programs.bash = {
     enable = true;

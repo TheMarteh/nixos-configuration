@@ -43,6 +43,17 @@
     };
   };
 
+  # --- END HYPRLAND / WAYLAND SETUP ---
+
+  # Docker support
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;      # Optioneel: rootless mode
+      setSocketVariable = true;
+    };
+  };
+
   # bluetooth gerelateerde shizzle
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -77,7 +88,10 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.steal = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ 
+      "wheel"   # Enable ‘sudo’ for the user.
+      "docker"  # Enable docker usage for the user.
+       ]; 
     # User packages have been moved to home.nix!
   };
 
