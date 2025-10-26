@@ -105,6 +105,10 @@ in
     dotnet-sdk_9
     # Populaire .NET tools
     dotnet-ef        # Entity Framework CLI
+    flutter
+    vscode
+    android-studio
+    ninja
 
     # Terminal tools
     neofetch
@@ -124,7 +128,6 @@ in
     kdePackages.dolphin # File manager
     pkgs-unstable.whatsapp-electron # WhatsApp desktop client
     jetbrains.rider # .NET IDE
-    vscode # Code editor
 
     # Wayland/Hyprland tools
     kitty
