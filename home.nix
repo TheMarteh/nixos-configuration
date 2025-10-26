@@ -24,6 +24,19 @@ in
     userEmail = "martijnfs@me.com";
   };
 
+  # programs.hyprpaper = {
+  #   enable = true;
+  #   settings = {
+  #     preload = [
+  #       "${dotfiles}/hypr/wallpapers/wallpaper.jpg"
+  #     ];
+  #     wallpapers = {
+  #       "DP-5" = "${dotfiles}/hypr/wallpapers/wallpaper.jpg";
+  #       "DP-4" = "${dotfiles}/hypr/wallpapers/wallpaper.jpg";
+  #     };
+  #   };
+  # };
+
   programs.alacritty = {
     enable = true;
     settings = {
@@ -126,6 +139,6 @@ in
     wofi
     rofi
     waybar
-    hyprpaper
+    swww
   ];
 }
