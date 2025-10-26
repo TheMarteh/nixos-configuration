@@ -43,6 +43,22 @@
     };
   };
 
+  # XDG Portal voor theme detection
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = "*";
+  };
+
+  # Systeembrede dark mode preference
+  environment.sessionVariables = {
+    GTK_THEME = "Adwaita:dark";
+  };
+
+
   # --- END HYPRLAND / WAYLAND SETUP ---
 
   # Docker support

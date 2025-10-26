@@ -52,7 +52,16 @@ in
     };
   };
 
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    profiles.default = {
+      settings = {
+        "ui.systemUsesDarkTheme" = 1;
+        "browser.theme.content-theme" = 0;  # 0 = dark, 1 = light
+        "browser.theme.toolbar-theme" = 0;
+      };
+    };
+  };
 
 
   xdg.configFile = builtins.mapAttrs
@@ -93,6 +102,61 @@ in
   # home.sessionPath = [
   #   "${pkgs.dotnet-sdk_9}/bin"
   # ];
+    # GTK Theme (voor Firefox, GNOME apps, etc.)
+  gtk = {
+    enable = true;
+    
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    
+    cursorTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  # Qt Theme (voor Dolphin, Rider, KDE apps)
+  qt = {
+    enable = true;
+    platformTheme.name = "adwaita";
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.adwaita-qt;
+    };
+  };
+
+  # Environment variabelen
+  home.sessionVariables = {
+    # GTK
+    GTK_THEME = "Adwaita:dark";
+    
+    # Qt
+    QT_QPA_PLATFORMTHEME = "adwaita";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
+    
+    # .NET
+    DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
+    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+  };
+
+  home.sessionPath = [
+    "${pkgs.dotnet-sdk_9}/bin"
+  ];
 
   home.packages = with pkgs; [
     # Development tools
@@ -134,6 +198,12 @@ in
     wofi
     rofi
     waybar
+
+    # Theme packages
+    adwaita-qt
+    adwaita-qt6
+    gnome-themes-extra
+    adwaita-icon-theme
   ];
 
   services.swww = {
