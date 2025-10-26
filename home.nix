@@ -26,7 +26,7 @@ in
   programs.gh = {
     enable = true;
     gitCredentialHelper.enable = true;
-  }
+  };
   
   programs.bash = {
     enable = true;
