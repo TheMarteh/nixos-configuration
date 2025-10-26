@@ -31,7 +31,7 @@ in
         normal = {
           family = "JetBrains Mono Nerd Font";
         };
-        size = 12.0;
+        size = 16.0;
       };
     };
   };
