@@ -24,6 +24,18 @@ in
     userEmail = "martijnfs@me.com";
   };
 
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      font = {
+        normal = {
+          family = "JetBrains Mono Nerd Font";
+        };
+        size = 12.0;
+      };
+    };
+  };
+
   programs.gh = {
     enable = true;
     gitCredentialHelper.enable = true;
@@ -110,7 +122,6 @@ in
     kdePackages.dolphin
 
     # Wayland/Hyprland tools
-    alacritty
     kitty
     wofi
     rofi
