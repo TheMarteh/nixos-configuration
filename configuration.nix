@@ -23,7 +23,6 @@
   time.timeZone = "Europe/Amsterdam";
 
   # --- HYPRLAND / WAYLAND SETUP ---
-  
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -43,11 +42,6 @@
       };
     };
   };
-
-  # Hyprland werkt goed met modern input
-  # programs.waybar.enable = true;     # Panel
-  # programs.wofi.enable = true;       # App launcher
-  # programs.swaybg.enable = true;     # Background
 
   # bluetooth gerelateerde shizzle
   hardware.bluetooth.enable = true;

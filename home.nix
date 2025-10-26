@@ -97,10 +97,12 @@ in
 
     # GUI apps
     vscode
+    obsidian
     _1password-cli
     _1password-gui
     bolt-launcher # osrs launcher
     vivaldi
+    kdePackages.dolphin
 
     # Wayland/Hyprland tools
     alacritty
