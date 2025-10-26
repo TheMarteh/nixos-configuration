@@ -19,7 +19,30 @@ window#waybar {
     color: @fg;
 }
 
+
+/* #cpu,
+#battery,
+#pulseaudio {
+  min-width: 12px;
+  margin: 0 7.5px;
+}
+
+#clock {
+  margin-left: 8.75px;
+}
+
+#bluetooth {
+  margin-right: 17px;
+}
+
+#network {
+  margin-right: 13px;
+} */
+
 .modules-left {
-  margin-left: 8px;
-  color: @fg;
+  margin-left: 24px;
+}
+
+.modules-right {
+  margin-right: 24px;
 }
