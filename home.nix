@@ -84,6 +84,7 @@ in
     bolt-launcher # osrs launcher
     vivaldi
     kdePackages.dolphin
+    pkgs-unstable.whatsapp-electron
 
     # Wayland/Hyprland tools
     kitty
