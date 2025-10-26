@@ -84,30 +84,16 @@
   users.users.steal = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      tree
-      vscode
-      _1password-cli
-      _1password-gui
-      bolt-launcher # osrs launcher
-      vivaldi
-    ];
+    # User packages have been moved to home.nix!
   };
-
-  programs.firefox.enable = true;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    curl
     git
-    alacritty
-    btop
-    rofi
-    kitty
-    waybar
-    hyprpaper
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

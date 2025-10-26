@@ -13,14 +13,21 @@ in
 {
   home.username = "steal";
   home.homeDirectory = "/home/steal";
+  home.stateVersion = "25.05";
+
+  programs.home-manager.enable = true;
+
   programs.git = { 
     enable = true;
     userName = "TheMarteh";
     userEmail = "martijnfs@me.com";
   };
-  programs.gh.enable = true;
-  programs.gh.gitCredentialHelper.enable = true;
-  home.stateVersion = "25.05";
+
+  programs.gh = {
+    enable = true;
+    gitCredentialHelper.enable = true;
+  }
+  
   programs.bash = {
     enable = true;
     shellAliases = {
@@ -28,6 +35,9 @@ in
       nrs = "sudo nixos-rebuild switch --flake ~/nixos-configuration#nixos-steal";
     };
   };
+
+  programs.firefox.enable = true;
+
 
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
@@ -72,14 +82,32 @@ in
   # home.file.".config/alactritty".source = ./config/alactritty;
 
   home.packages = with pkgs; [
+    # Development tools
     neovim
     ripgrep
     nil
     nixpkgs-fmt
     nodejs
     gcc
+
+    # Terminal tools
     neofetch
+    btop
+    tree
+
+    # GUI apps
+    vscode
+    _1password-cli
+    _1password-gui
+    bolt-launcher # osrs launcher
+    vivaldi
+
+    # Wayland/Hyprland tools
+    alacritty
+    kitty
     wofi
     rofi
+    waybar
+    hyprpaper
   ];
 }
