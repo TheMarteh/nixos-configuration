@@ -105,7 +105,6 @@
     alacritty
     btop
     rofi
-    docker
     kitty
     waybar
     hyprpaper
