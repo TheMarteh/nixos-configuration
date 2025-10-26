@@ -62,6 +62,38 @@ in
     })
     configs;
 
+  # # VSCode met .NET support
+  # programs.vscode = {
+  #   enable = true;
+  #   # Gebruik FHS wrapper voor betere .NET compatibiliteit
+  #   package = pkgs.vscode.fhsWithPackages (ps: with ps; [
+  #     dotnet-sdk_9
+  #     zlib
+  #     openssl
+  #     icu
+  #   ]);
+  #   extensions = with pkgs.vscode-extensions; [
+  #     ms-dotnettools.csharp
+  #     ms-dotnettools.csdevkit
+  #     ms-dotnettools.vscode-dotnet-runtime
+  #   ];
+  #   userSettings = {
+  #     # .NET specifieke settings
+  #     "dotnet.dotnetPath" = "dotnet";  # Werkt nu via FHS
+  #     "omnisharp.useModernNet" = true;
+  #   };
+
+  #   mutableExtensionsDir = true;
+  # };
+  # # Environment variabelen voor .NET
+  # home.sessionVariables = {
+  #   DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
+  #   DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+  # };
+  # home.sessionPath = [
+  #   "${pkgs.dotnet-sdk_9}/bin"
+  # ];
+
   home.packages = with pkgs; [
     # Development tools
     neovim
@@ -70,21 +102,29 @@ in
     nixpkgs-fmt
     nodejs
     gcc
+    dotnet-sdk_9
+    # Populaire .NET tools
+    dotnet-ef        # Entity Framework CLI
 
     # Terminal tools
     neofetch
     btop
     tree
 
+    # Key wallet
+    kdePackages.kwallet
+    kdePackages.kwalletmanager  # GUI om wallet te beheren
+
     # GUI apps
-    vscode
-    obsidian
-    _1password-cli
-    _1password-gui
+    obsidian # note-taking app
+    _1password-cli 
+    _1password-gui 
     bolt-launcher # osrs launcher
-    vivaldi
-    kdePackages.dolphin
-    pkgs-unstable.whatsapp-electron
+    vivaldi # web browser
+    kdePackages.dolphin # File manager
+    pkgs-unstable.whatsapp-electron # WhatsApp desktop client
+    jetbrains.rider # .NET IDE
+    vscode # Code editor
 
     # Wayland/Hyprland tools
     kitty
@@ -96,5 +136,27 @@ in
   services.swww = {
     enable = true;
     package = pkgs-unstable.swww;
+  };
+
+  # KDE Wallet service
+  systemd.user.services.kwallet = {
+    Unit = {
+      Description = "KDE Wallet Service";
+      After = [ "graphical-session-pre.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.kdePackages.kwallet}/bin/kwalletd6";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  # Pinentry voor wachtwoord prompts
+  services.gpg-agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-qt;
   };
 }
