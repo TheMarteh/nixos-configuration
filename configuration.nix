@@ -23,8 +23,6 @@
   time.timeZone = "Europe/Amsterdam";
 
   # --- HYPRLAND / WAYLAND SETUP ---
-
-  services.getty.autologinUser = "steal";
   
   programs.hyprland = {
     enable = true;
@@ -32,14 +30,19 @@
     withUWSM = true;
   };
 
-  # services.greetd = {
-  #   enable = true;
-  #   settings = {
-  #     default_session = {
-  #       command = "Hyprland";
-  #     };
-  #   };
-  # };
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+        user = "greeter";
+      };
+      initial_session = {
+        command = "Hyprland";
+        user = "steal";
+      };
+    };
+  };
 
   # Hyprland werkt goed met modern input
   # programs.waybar.enable = true;     # Panel
