@@ -75,7 +75,10 @@
   services.blueman.enable = true;
 
   # muis input shizzle
-  services.libinput.mouse.accelProfile = "flat";
+  services.libinput.enable = true;
+  services.libinput.mouse = {
+    accelProfile = "flat";
+  };
 
   # NVidia drivers
   nixpkgs.config.allowUnfree = true;
