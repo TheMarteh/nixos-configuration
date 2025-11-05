@@ -71,7 +71,10 @@
   };
 
   # bluetooth gerelateerde shizzle
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
   services.blueman.enable = true;
 
   # muis input shizzle
