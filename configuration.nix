@@ -74,8 +74,12 @@
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
+    settings = {
+      General = {
+		    Experimental = true;
+	    };
+    };
   };
-  services.blueman.enable = true;
 
   # muis input shizzle
   services.libinput.enable = true;

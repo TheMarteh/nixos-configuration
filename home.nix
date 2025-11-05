@@ -174,6 +174,9 @@ in
     android-studio
     ninja
 
+    # Misc
+    blueberry # bluetooth management tool
+
     # Terminal tools
     neofetch
     btop
