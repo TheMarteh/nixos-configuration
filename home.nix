@@ -64,6 +64,15 @@ in
     };
   };
 
+  # Runelite config met versiebeheer
+  home.file.".local/share/bolt-launcher/.runelite/default.properties".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-configuration/config/runelite/default.properties";
+
+  home.file.".local/share/bolt-launcher/.runelite/plugins".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-configuration/config/runelite/plugins";
+
+  home.file.".local/share/bolt-launcher/.runelite/profiles2".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-configuration/config/runelite/profiles2";
 
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
