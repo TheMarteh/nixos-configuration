@@ -82,37 +82,29 @@ in
     configs;
 
   # # VSCode met .NET support
-  # programs.vscode = {
-  #   enable = true;
-  #   # Gebruik FHS wrapper voor betere .NET compatibiliteit
-  #   package = pkgs.vscode.fhsWithPackages (ps: with ps; [
-  #     dotnet-sdk_9
-  #     zlib
-  #     openssl
-  #     icu
-  #   ]);
-  #   extensions = with pkgs.vscode-extensions; [
-  #     ms-dotnettools.csharp
-  #     ms-dotnettools.csdevkit
-  #     ms-dotnettools.vscode-dotnet-runtime
-  #   ];
-  #   userSettings = {
-  #     # .NET specifieke settings
-  #     "dotnet.dotnetPath" = "dotnet";  # Werkt nu via FHS
-  #     "omnisharp.useModernNet" = true;
-  #   };
+  programs.vscode = {
+    enable = true;
+    # Gebruik FHS wrapper voor betere .NET compatibiliteit
+    package = pkgs.vscode.fhsWithPackages (ps: with ps; [
+      dotnet-sdk_9
+      zlib
+      openssl
+      icu
+    ]);
+    extensions = with pkgs.vscode-extensions; [
+      ms-dotnettools.csharp
+      ms-dotnettools.csdevkit
+      ms-dotnettools.vscode-dotnet-runtime
+    ];
+    userSettings = {
+      # .NET specifieke settings
+      "dotnet.dotnetPath" = "dotnet";  # Werkt nu via FHS
+      "omnisharp.useModernNet" = true;
+    };
+    mutableExtensionsDir = true;
+  };
 
-  #   mutableExtensionsDir = true;
-  # };
-  # # Environment variabelen voor .NET
-  # home.sessionVariables = {
-  #   DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
-  #   DOTNET_CLI_TELEMETRY_OPTOUT = "1";
-  # };
-  # home.sessionPath = [
-  #   "${pkgs.dotnet-sdk_9}/bin"
-  # ];
-    # GTK Theme (voor Firefox, GNOME apps, etc.)
+  # GTK Theme (voor Firefox, GNOME apps, etc.)
   gtk = {
     enable = true;
     
@@ -164,10 +156,6 @@ in
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
   };
 
-  home.sessionPath = [
-    "${pkgs.dotnet-sdk_9}/bin"
-  ];
-
   home.packages = with pkgs; [
     # Development tools
     neovim
@@ -180,7 +168,6 @@ in
     # Populaire .NET tools
     dotnet-ef        # Entity Framework CLI
     flutter
-    vscode
     android-studio
     ninja
 
