@@ -64,16 +64,6 @@ in
     };
   };
 
-  # Runelite config met versiebeheer
-  home.file.".local/share/bolt-launcher/.runelite/default.properties".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-configuration/config/runelite/default.properties";
-
-  home.file.".local/share/bolt-launcher/.runelite/plugins".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-configuration/config/runelite/plugins";
-
-  home.file.".local/share/bolt-launcher/.runelite/profiles2".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-configuration/config/runelite/profiles2";
-
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
       source = create_symlink "${dotfiles}/${subpath}";
@@ -154,6 +144,11 @@ in
     # .NET
     DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+
+    # Dit zou helpen bij Electron apps op Wayland
+    ELECTRON_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
   };
 
   home.packages = with pkgs; [
@@ -187,7 +182,7 @@ in
     obsidian # note-taking app
     _1password-cli 
     _1password-gui 
-    bolt-launcher # osrs launcher
+    pkgs-unstable.bolt-launcher # osrs launcher
     vivaldi # web browser
     kdePackages.dolphin # File manager
     pkgs-unstable.whatsapp-electron # WhatsApp desktop client
