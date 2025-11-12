@@ -92,7 +92,7 @@ in
       "omnisharp.useModernNet" = true;
       # Smart commit
       "git.confirmSync" = false;
-      
+      "git.enableSmartCommit" = true;
     };
     mutableExtensionsDir = true;
   };
