@@ -94,7 +94,6 @@ in
         # Smart commit
         "git.confirmSync" = false;
         "git.enableSmartCommit" = true;
-        "editor.formatOnSave"= true;
       };
     };
     mutableExtensionsDir = true;
