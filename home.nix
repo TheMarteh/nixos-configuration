@@ -29,7 +29,7 @@ in
     settings = {
       font = {
         normal = {
-          family = "JetBrains Mono Nerd Font";
+          family = "CommitMono Nerd Font Mono";
         };
         size = 16.0;
       };
@@ -75,7 +75,7 @@ in
   programs.vscode = {
     enable = true;
     # Gebruik FHS wrapper voor betere .NET compatibiliteit
-    package = pkgs.vscode.fhsWithPackages (ps: with ps; [
+    package = pkgs-unstable.vscode.fhsWithPackages (ps: with ps; [
       dotnet-sdk_9
       zlib
       openssl
