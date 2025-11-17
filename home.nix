@@ -81,17 +81,20 @@ in
       openssl
       icu
     ]);
-    extensions = with pkgs.vscode-extensions; [
-      ms-dotnettools.csharp
-      ms-dotnettools.csdevkit
-      ms-dotnettools.vscode-dotnet-runtime
-    ];
-    userSettings = {
-      # .NET specifieke settings
-      "omnisharp.useModernNet" = true;
-      # Smart commit
-      "git.confirmSync" = false;
-      "git.enableSmartCommit" = true;
+    
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        ms-dotnettools.csharp
+        ms-dotnettools.csdevkit
+        ms-dotnettools.vscode-dotnet-runtime
+      ];
+      userSettings = {
+        # .NET specifieke settings
+        "omnisharp.useModernNet" = true;
+        # Smart commit
+        "git.confirmSync" = false;
+        "git.enableSmartCommit" = true;
+      };
     };
     mutableExtensionsDir = true;
   };
