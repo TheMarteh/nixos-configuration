@@ -88,7 +88,6 @@ in
     ];
     userSettings = {
       # .NET specifieke settings
-      "dotnet.dotnetPath" = "dotnet";  # Werkt nu via FHS
       "omnisharp.useModernNet" = true;
       # Smart commit
       "git.confirmSync" = false;
