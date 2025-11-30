@@ -18,6 +18,106 @@ in
 
   programs.home-manager.enable = true;
 
+  # Mapping van dotfiles in ./config naar $HOME/.config
+  xdg.configFile = builtins.mapAttrs
+  (name: subpath: {
+    source = create_symlink "${dotfiles}/${subpath}";
+    recursive = true;
+  })
+  configs;
+
+
+  # === Environment variables ===
+  home.sessionVariables = {
+    # GTK
+    GTK_THEME = "Adwaita:dark";
+    
+    # Qt
+    QT_QPA_PLATFORMTHEME = "adwaita";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
+    
+    # .NET
+    DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
+    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+
+    # Dit zou helpen bij Electron apps op Wayland
+    ELECTRON_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+  };
+
+  
+  # === Default theming ===
+  # GTK Theme (voor Firefox, GNOME apps, etc.)
+  gtk = {
+    enable = true;
+    
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    
+    cursorTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  # Qt Theme (voor Dolphin, Rider, KDE apps)
+  qt = {
+    enable = true;
+    platformTheme.name = "adwaita";
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.adwaita-qt;
+    };
+  };
+
+
+  # === Services ===
+  # Swww service voor wallpapers en compositing
+  services.swww = {
+    enable = true;
+    package = pkgs-unstable.swww;
+  };
+
+  # Pinentry voor wachtwoord prompts
+  services.gpg-agent = {
+    enable = true;
+    pinentry.package = pkgs.pinentry-qt;
+  };
+
+  # KDE Wallet service
+  systemd.user.services.kwallet = {
+    Unit = {
+      Description = "KDE Wallet Service";
+      After = [ "graphical-session-pre.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.kdePackages.kwallet}/bin/kwalletd6";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+
+  # === Programma configuraties ===
   programs.git = { 
     enable = true;
     userName = "TheMarteh";
@@ -64,14 +164,7 @@ in
     };
   };
 
-  xdg.configFile = builtins.mapAttrs
-    (name: subpath: {
-      source = create_symlink "${dotfiles}/${subpath}";
-      recursive = true;
-    })
-    configs;
-
-  # # VSCode met .NET support
+  # VSCode met .NET ondersteuning
   programs.vscode = {
     enable = true;
     # Gebruik FHS wrapper voor betere .NET compatibiliteit
@@ -99,63 +192,7 @@ in
     mutableExtensionsDir = true;
   };
 
-  # GTK Theme (voor Firefox, GNOME apps, etc.)
-  gtk = {
-    enable = true;
-    
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
-    
-    iconTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-    };
-    
-    cursorTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-    };
-    
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-    
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-  };
-
-  # Qt Theme (voor Dolphin, Rider, KDE apps)
-  qt = {
-    enable = true;
-    platformTheme.name = "adwaita";
-    style = {
-      name = "adwaita-dark";
-      package = pkgs.adwaita-qt;
-    };
-  };
-
-  # Environment variabelen
-  home.sessionVariables = {
-    # GTK
-    GTK_THEME = "Adwaita:dark";
-    
-    # Qt
-    QT_QPA_PLATFORMTHEME = "adwaita";
-    QT_STYLE_OVERRIDE = "adwaita-dark";
-    
-    # .NET
-    DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
-    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
-
-    # Dit zou helpen bij Electron apps op Wayland
-    ELECTRON_ENABLE_WAYLAND = "1";
-    NIXOS_OZONE_WL = "1";
-    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-  };
-
+  # === Geïnstalleerde pakketten ===
   home.packages = with pkgs; [
     # Development tools
     neovim
@@ -205,31 +242,4 @@ in
     gnome-themes-extra
     adwaita-icon-theme
   ];
-
-  services.swww = {
-    enable = true;
-    package = pkgs-unstable.swww;
-  };
-
-  # KDE Wallet service
-  systemd.user.services.kwallet = {
-    Unit = {
-      Description = "KDE Wallet Service";
-      After = [ "graphical-session-pre.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStart = "${pkgs.kdePackages.kwallet}/bin/kwalletd6";
-      Restart = "on-failure";
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
-
-  # Pinentry voor wachtwoord prompts
-  services.gpg-agent = {
-    enable = true;
-    pinentry.package = pkgs.pinentry-qt;
-  };
 }
