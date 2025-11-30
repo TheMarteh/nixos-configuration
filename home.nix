@@ -202,7 +202,7 @@ in
     enable = true;
     package = pkgs.dotnet-sdk_9;
     enableGlobalTools = true;
-  }
+  };
 
   # === Geïnstalleerde pakketten ===
   home.packages = with pkgs; [
