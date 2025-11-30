@@ -205,7 +205,6 @@ in
     # Populaire .NET tools
     dotnet-ef        # Entity Framework CLI
     flutter
-    android-studio
     ninja
 
     # Misc
@@ -222,13 +221,14 @@ in
 
     # GUI apps
     obsidian # note-taking app
-    _1password-cli 
-    _1password-gui 
+    _1password-cli # password manager CLI
+    _1password-gui # password manager GUI
     pkgs-unstable.bolt-launcher # osrs launcher
     vivaldi # web browser
     kdePackages.dolphin # File manager
     pkgs-unstable.whatsapp-electron # WhatsApp desktop client
     jetbrains.rider # .NET IDE
+    android-studio # Android development IDE
 
     # Wayland/Hyprland tools
     kitty
