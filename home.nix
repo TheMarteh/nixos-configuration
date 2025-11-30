@@ -47,6 +47,7 @@ in
 
     # Voor Flutter apps op Wayland
     ANDROID_EMULATOR_USE_SYSTEM_LIBS = "1";
+    QT_QPA_PLATFORM = "xcb";
   };
 
   
