@@ -88,13 +88,13 @@ in
         ms-dotnettools.csdevkit
         ms-dotnettools.vscode-dotnet-runtime
       ];
-      userSettings = {
-        # .NET specifieke settings
-        "omnisharp.useModernNet" = true;
-        # Smart commit
-        "git.confirmSync" = false;
-        "git.enableSmartCommit" = true;
-      };
+      # userSettings = {
+      #   # .NET specifieke settings
+      #   "omnisharp.useModernNet" = true;
+      #   # Smart commit
+      #   "git.confirmSync" = false;
+      #   "git.enableSmartCommit" = true;
+      # };
     };
     mutableExtensionsDir = true;
   };
