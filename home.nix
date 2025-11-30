@@ -198,6 +198,12 @@ in
     mutableExtensionsDir = true;
   };
 
+  programs.dotnet = {
+    enable = true;
+    package = pkgs.dotnet-sdk_9;
+    enableGlobalTools = true;
+  }
+
   # === Geïnstalleerde pakketten ===
   home.packages = with pkgs; [
     # Development tools
@@ -208,7 +214,6 @@ in
     nodejs
     gcc
     cmake
-    dotnet-sdk_9
     dotnet-ef        # Entity Framework CLI
     flutter
     ninja
