@@ -129,6 +129,12 @@
     wget
     curl
     git
+
+    # Utilities
+    libpulseaudio
+    libxkbcommon
+    libxcb
+    wayland
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
