@@ -229,7 +229,7 @@ in
     pkgs-unstable.whatsapp-electron # WhatsApp desktop client
     jetbrains.rider # .NET IDE
     android-studio # Android development IDE
-    vscode # Code editor (geen FHS wrapper)
+    pkgs-unstable.vscode # Code editor (geen FHS wrapper)
 
     # Wayland/Hyprland tools
     kitty
