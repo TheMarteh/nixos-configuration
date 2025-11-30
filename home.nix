@@ -4,7 +4,7 @@ let
   dotfiles = "${config.home.homeDirectory}/nixos-configuration/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
-    qtile = "qtile";
+    # qtile = "qtile";
     nvim = "nvim";
     hypr = "hypr";
     waybar = "waybar";
