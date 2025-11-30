@@ -164,33 +164,33 @@ in
     };
   };
 
-  # VSCode met .NET ondersteuning
-  programs.vscode = {
-    enable = true;
-    # Gebruik FHS wrapper voor betere .NET compatibiliteit
-    package = pkgs-unstable.vscode.fhsWithPackages (ps: with ps; [
-      dotnet-sdk_9
-      zlib
-      openssl
-      icu
-    ]);
+  # # VSCode met .NET ondersteuning
+  # programs.vscode = {
+  #   enable = true;
+  #   # Gebruik FHS wrapper voor betere .NET compatibiliteit
+  #   package = pkgs-unstable.vscode.fhsWithPackages (ps: with ps; [
+  #     dotnet-sdk_9
+  #     zlib
+  #     openssl
+  #     icu
+  #   ]);
     
-    profiles.default = {
-      extensions = with pkgs.vscode-extensions; [
-        ms-dotnettools.csharp
-        ms-dotnettools.csdevkit
-        ms-dotnettools.vscode-dotnet-runtime
-      ];
-      # userSettings = {
-      #   # .NET specifieke settings
-      #   "omnisharp.useModernNet" = true;
-      #   # Smart commit
-      #   "git.confirmSync" = false;
-      #   "git.enableSmartCommit" = true;
-      # };
-    };
-    mutableExtensionsDir = true;
-  };
+  #   profiles.default = {
+  #     extensions = with pkgs.vscode-extensions; [
+  #       ms-dotnettools.csharp
+  #       ms-dotnettools.csdevkit
+  #       ms-dotnettools.vscode-dotnet-runtime
+  #     ];
+  #     # userSettings = {
+  #     #   # .NET specifieke settings
+  #     #   "omnisharp.useModernNet" = true;
+  #     #   # Smart commit
+  #     #   "git.confirmSync" = false;
+  #     #   "git.enableSmartCommit" = true;
+  #     # };
+  #   };
+  #   mutableExtensionsDir = true;
+  # };
 
   # === Geïnstalleerde pakketten ===
   home.packages = with pkgs; [
@@ -229,6 +229,7 @@ in
     pkgs-unstable.whatsapp-electron # WhatsApp desktop client
     jetbrains.rider # .NET IDE
     android-studio # Android development IDE
+    vscode # Code editor (geen FHS wrapper)
 
     # Wayland/Hyprland tools
     kitty
