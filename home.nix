@@ -209,7 +209,7 @@ in
     gcc
     cmake
     dotnet-sdk_9
-    dotnet-csharpier   # C# code formatter
+    csharpier   # C# code formatter
     dotnet-ef        # Entity Framework CLI
     flutter
     ninja
