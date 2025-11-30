@@ -194,6 +194,8 @@ in
     mutableExtensionsDir = true;
   };
 
+  programs.adb.enable = true;
+
   # === Geïnstalleerde pakketten ===
   home.packages = with pkgs; [
     # Development tools
@@ -231,7 +233,6 @@ in
     pkgs-unstable.whatsapp-electron # WhatsApp desktop client
     jetbrains.rider # .NET IDE
     android-studio # Android development IDE
-    adb # Android debugging tool
     # pkgs-unstable.vscode # Code editor (geen FHS wrapper)
 
     # Wayland/Hyprland tools
