@@ -117,6 +117,7 @@
     extraGroups = [ 
       "wheel"   # Enable ‘sudo’ for the user.
       "docker"  # Enable docker usage for the user.
+      "adbusers" # Enable adb usage for the user.
     ]; 
     # User packages have been moved to home.nix!
   };
