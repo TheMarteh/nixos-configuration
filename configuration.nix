@@ -89,7 +89,14 @@
 
   # NVidia drivers
   nixpkgs.config.allowUnfree = true;
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      libva
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  }
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true;
 
@@ -107,6 +114,13 @@
     enable = true;
     pulse.enable = true;
   };
+
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+    loadModels = [ "deepseek-r1"];
+  };
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -130,15 +144,6 @@
     curl
     git
   ];
-
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [
-      libva
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
