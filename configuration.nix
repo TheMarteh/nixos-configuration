@@ -98,6 +98,7 @@
     ];
   };
   hardware.nvidia.open = true;
+  hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Configure keymap in X11
@@ -120,7 +121,7 @@
     acceleration = "cuda";
     loadModels = [ "deepseek-r1"];
   };
-
+  services.open-webui.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;

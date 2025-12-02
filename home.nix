@@ -104,6 +104,7 @@ in
     pinentry.package = pkgs.pinentry-qt;
   };
 
+
   # KDE Wallet service
   systemd.user.services.kwallet = {
     Unit = {
