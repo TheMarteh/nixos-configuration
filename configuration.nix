@@ -96,9 +96,9 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
-  }
-  services.xserver.videoDrivers = [ "nvidia" ];
+  };
   hardware.nvidia.open = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
