@@ -37,7 +37,7 @@ in
     QT_STYLE_OVERRIDE = "adwaita-dark";
     
     # .NET
-    DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
+    DOTNET_ROOT = "${pkgs-unstable.dotnet-sdk_10}";
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
 
     # Dit zou helpen bij Electron apps op Wayland
