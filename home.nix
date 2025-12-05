@@ -175,7 +175,6 @@ in
     # Gebruik FHS wrapper voor betere .NET compatibiliteit
     package = pkgs-unstable.vscode.fhsWithPackages (ps: with ps; [
       dotnet-sdk_10
-      dotnet-sdk_9
       zlib
       openssl
       icu
@@ -211,7 +210,6 @@ in
     gcc
     cmake
     pkgs-unstable.dotnet-sdk_10
-    pkgs-unstable.dotnet-sdk_9
     csharpier   # C# code formatter
     dotnet-ef        # Entity Framework CLI
     flutter
