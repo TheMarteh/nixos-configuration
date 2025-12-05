@@ -119,7 +119,7 @@
   services.ollama = {
     enable = true;
     acceleration = "cuda";
-    loadModels = [ "deepseek-r1"];
+    loadModels = [ "gemma3:latest"];
   };
   services.open-webui.enable = true;
 
