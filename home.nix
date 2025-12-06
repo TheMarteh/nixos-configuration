@@ -125,8 +125,10 @@ in
   # === Programma configuraties ===
   programs.git = { 
     enable = true;
-    userName = "TheMarteh";
-    userEmail = "martijnfs@me.com";
+    settings.user = {
+        name = "TheMarteh";
+        email = "martijnfs@me.com";
+    };
   };
 
   programs.alacritty = {
