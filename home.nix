@@ -214,6 +214,7 @@ in
     dotnet-ef        # Entity Framework CLI
     flutter
     ninja
+    python
 
     # Misc
     blueberry # bluetooth management tool
@@ -238,6 +239,7 @@ in
     jetbrains.rider # .NET IDE
     android-studio # Android development IDE
     android-tools # ADB en Fastboot tools
+    yaak # API testing tool
     # pkgs-unstable.vscode # Code editor (geen FHS wrapper)
 
     # Wayland/Hyprland tools

@@ -29,6 +29,8 @@
     withUWSM = true;
   };
 
+  programs.nix-ld.enable = true;
+
   services.greetd = {
     enable = true;
     settings = {
