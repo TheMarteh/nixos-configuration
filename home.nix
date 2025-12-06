@@ -199,6 +199,9 @@ in
     mutableExtensionsDir = true;
   };
 
+  # Claude code
+  programs.claude-code.enable = true;
+
   # === Geïnstalleerde pakketten ===
   home.packages = with pkgs; [
     # Development tools
