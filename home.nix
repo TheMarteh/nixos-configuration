@@ -214,7 +214,7 @@ in
     dotnet-ef        # Entity Framework CLI
     flutter
     ninja
-    python
+    python3
 
     # Misc
     blueberry # bluetooth management tool
