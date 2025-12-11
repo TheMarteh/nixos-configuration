@@ -72,6 +72,8 @@
     };
   };
 
+  virtualisation.vmware.host.enable = true;
+
   # bluetooth gerelateerde shizzle
   hardware.bluetooth = {
     enable = true;
