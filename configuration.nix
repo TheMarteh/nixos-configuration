@@ -72,7 +72,11 @@
     };
   };
 
-  virtualisation.vmware.host.enable = true;
+  # Virtual Machine Manager
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = ["steal"];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
   # bluetooth gerelateerde shizzle
   hardware.bluetooth = {
