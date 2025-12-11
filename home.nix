@@ -9,6 +9,12 @@ let
     hypr = "hypr";
     waybar = "waybar";
   };
+  androidEmu = pkgs.androidenv.emulateApp {
+    name = "emulate-MyAndroidApp";
+    platformVersion = "36";
+    abiVersion = "x86_64";
+    systemImageType = "google_apis_playstore";
+  };
 in
 
 {
@@ -244,6 +250,8 @@ in
     jetbrains.rider # .NET IDE
     android-studio # Android development IDE
     android-tools # ADB en Fastboot tools
+    android-studio-tools # Android emulator en cli shizzle
+    androidEmu # Android emulator instance
     yaak # API testing tool
     # pkgs-unstable.vscode # Code editor (geen FHS wrapper)
 

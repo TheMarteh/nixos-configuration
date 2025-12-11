@@ -103,6 +103,10 @@
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  nixpkgs.config = {
+      android_sdk.accept_license = true;
+    };
+
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
