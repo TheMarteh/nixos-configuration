@@ -254,6 +254,7 @@ in
     androidEmu # Android emulator instance
     yaak # API testing tool
     # pkgs-unstable.vscode # Code editor (geen FHS wrapper)
+    zed-editor # Alternatieve code editor
 
     # Wayland/Hyprland tools
     kitty
