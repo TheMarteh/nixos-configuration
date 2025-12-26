@@ -221,6 +221,7 @@ in
     gcc
     cmake
     pkgs-unstable.dotnet-sdk_10
+    roslyn-ls
     csharpier   # C# code formatter
     dotnet-ef        # Entity Framework CLI
     flutter
