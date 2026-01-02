@@ -43,7 +43,7 @@ in
     QT_STYLE_OVERRIDE = "adwaita-dark";
     
     # .NET
-    DOTNET_ROOT = "${pkgs-unstable.dotnet-sdk_10}";
+    # DOTNET_ROOT = "${pkgs-unstable.dotnet-sdk_10}";
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
 
     # Dit zou helpen bij Electron apps op Wayland
@@ -235,6 +235,8 @@ in
     neofetch
     btop
     tree
+    lazygit
+    lazydocker
 
     # Key wallet
     kdePackages.kwallet
@@ -256,6 +258,7 @@ in
     yaak # API testing tool
     # pkgs-unstable.vscode # Code editor (geen FHS wrapper)
     zed-editor # Alternatieve code editor
+    discord # Chat app
 
     # Wayland/Hyprland tools
     kitty
