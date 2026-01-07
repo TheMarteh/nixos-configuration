@@ -43,7 +43,7 @@ in
     QT_STYLE_OVERRIDE = "adwaita-dark";
     
     # .NET
-    # DOTNET_ROOT = "${pkgs-unstable.dotnet-sdk_10}";
+    DOTNET_ROOT = "${pkgs-unstable.dotnet-sdk_10}";
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
 
     # Dit zou helpen bij Electron apps op Wayland
@@ -214,15 +214,18 @@ in
   home.packages = with pkgs; [
     # Development tools
     neovim
+    gcc
+    tree-sitter
     ripgrep
+    fd
     nil
     nixpkgs-fmt
     nodejs
-    gcc
     cmake
     pkgs-unstable.dotnet-sdk_10
     roslyn-ls
-    csharpier   # C# code formatter
+    omnisharp-roslyn
+    pkgs-unstable.csharpier   # C# code formatter
     dotnet-ef        # Entity Framework CLI
     flutter
     ninja
