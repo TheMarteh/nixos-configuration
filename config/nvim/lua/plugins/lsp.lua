@@ -2,7 +2,6 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            -- Mason (optioneel)
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             
@@ -15,13 +14,11 @@ return {
             "saadparwaiz1/cmp_luasnip",
         },
         config = function()
-            -- Setup Mason
             require("mason").setup()
             require("mason-lspconfig").setup({
                 ensure_installed = {},
             })
 
-            -- Capabilities voor autocompletion
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             -- LSP keybinds
@@ -39,19 +36,49 @@ return {
                     vim.keymap.set('n', '<leader>f', function()
                         vim.lsp.buf.format { async = true }
                     end, opts)
+                    
+                    -- Extra: diagnostics keybinds
+                    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+                    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+                    vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+                    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
                 end,
             })
 
-            -- ROSLYN LSP SETUP - Moderne API voor Neovim 0.11+
-            -- Check eerst of roslyn-ls beschikbaar is
+            -- ROSLYN LSP SETUP met correcte argumenten
             local roslyn_cmd = vim.fn.exepath("Microsoft.CodeAnalysis.LanguageServer")
             
             if roslyn_cmd ~= "" then
+                -- Maak een log directory voor Roslyn
+                local log_dir = vim.fn.stdpath("cache") .. "/roslyn"
+                vim.fn.mkdir(log_dir, "p")
+                
                 vim.lsp.config("roslyn", {
-                    cmd = { roslyn_cmd },
+                    cmd = {
+                        roslyn_cmd,
+                        "--logLevel=Information",
+                        "--extensionLogDirectory=" .. log_dir,
+                    },
                     filetypes = { "cs" },
                     root_markers = { "*.sln", "*.csproj", ".git" },
                     capabilities = capabilities,
+                    -- Optionele settings voor betere ervaring
+                    settings = {
+                        ["csharp|inlay_hints"] = {
+                            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+                            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+                            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+                            csharp_enable_inlay_hints_for_types = true,
+                            dotnet_enable_inlay_hints_for_indexer_parameters = true,
+                            dotnet_enable_inlay_hints_for_literal_parameters = true,
+                            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+                            dotnet_enable_inlay_hints_for_other_parameters = true,
+                            dotnet_enable_inlay_hints_for_parameters = true,
+                        },
+                        ["csharp|code_lens"] = {
+                            dotnet_enable_references_code_lens = true,
+                        },
+                    },
                 })
                 
                 -- Enable voor C# files
@@ -63,7 +90,7 @@ return {
                 })
             else
                 vim.notify(
-                    "Roslyn LSP not found. Install roslyn-ls via Nix.",
+                    "Roslyn LSP not found at: " .. roslyn_cmd,
                     vim.log.levels.WARN
                 )
             end
@@ -77,6 +104,10 @@ return {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
                     end,
+                },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
                 },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -110,11 +141,26 @@ return {
                     { name = 'buffer' },
                     { name = 'path' },
                 }),
+                formatting = {
+                    format = function(entry, vim_item)
+                        -- Toon van welke source de completion komt
+                        vim_item.menu = ({
+                            nvim_lsp = "[LSP]",
+                            luasnip = "[Snippet]",
+                            buffer = "[Buffer]",
+                            path = "[Path]",
+                        })[entry.source.name]
+                        return vim_item
+                    end,
+                },
             })
 
             -- Diagnostics configuratie
             vim.diagnostic.config({
-                virtual_text = true,
+                virtual_text = {
+                    prefix = '●',
+                    source = "if_many",
+                },
                 signs = true,
                 update_in_insert = false,
                 underline = true,
@@ -122,11 +168,18 @@ return {
                 float = {
                     border = 'rounded',
                     source = 'always',
+                    header = '',
+                    prefix = '',
                 },
             })
 
-            -- Diagnostic symbols
-            local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+            -- Diagnostic symbols in de gutter
+            local signs = { 
+                Error = "󰅚 ", 
+                Warn = "󰀪 ", 
+                Hint = "󰌶 ", 
+                Info = " " 
+            }
             for type, icon in pairs(signs) do
                 local hl = "DiagnosticSign" .. type
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
