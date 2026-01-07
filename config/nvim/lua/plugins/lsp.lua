@@ -47,81 +47,42 @@ return {
                 end,
             })
 
-            -- ROSLYN LSP SETUP
+            -- ROSLYN SETUP - Simpele versie die gewoon werkt
             local roslyn_cmd = vim.fn.exepath("Microsoft.CodeAnalysis.LanguageServer")
-            
+
             if roslyn_cmd ~= "" then
-                -- Maak log directory
                 local log_dir = vim.fn.stdpath("cache") .. "/roslyn"
                 vim.fn.mkdir(log_dir, "p")
                 
-                -- Configureer Roslyn
-                vim.lsp.config("roslyn", {
-                    cmd = {
-                        roslyn_cmd,
-                        "--logLevel=Information",
-                        "--extensionLogDirectory=" .. log_dir,
-                    },
-                    filetypes = { "cs" },
-                    root_markers = { "*.sln", "*.csproj", ".git" },
-                    capabilities = capabilities,
-                    settings = {
-                        ["csharp"] = {
-                            -- Completion settings
-                            ["completion"] = {
-                                ["showCompletionItemKind"] = true,
-                                ["showSnippets"] = true,
-                            },
-                            -- IntelliSense settings
-                            ["intelliSense"] = {
-                                ["enableImportCompletion"] = true,
-                                ["enableMethodGroupCompletion"] = true,
-                            },
-                        },
-                        ["csharp|inlay_hints"] = {
-                            csharp_enable_inlay_hints_for_implicit_object_creation = true,
-                            csharp_enable_inlay_hints_for_implicit_variable_types = true,
-                            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-                            csharp_enable_inlay_hints_for_types = true,
-                            dotnet_enable_inlay_hints_for_indexer_parameters = true,
-                            dotnet_enable_inlay_hints_for_literal_parameters = true,
-                            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-                            dotnet_enable_inlay_hints_for_other_parameters = true,
-                            dotnet_enable_inlay_hints_for_parameters = true,
-                        },
-                        ["csharp|code_lens"] = {
-                            dotnet_enable_references_code_lens = true,
-                        },
-                    },
-                })
-                
-                -- BELANGRIJK: Enable voor ALLE C# buffers, niet alleen nieuwe
-                vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
-                    pattern = "cs",
-                    callback = function(args)
-                        -- Check of LSP al draait voor deze buffer
-                        local clients = vim.lsp.get_clients({ bufnr = args.buf, name = "roslyn" })
-                        if #clients == 0 then
-                            vim.lsp.enable("roslyn")
-                            print("Roslyn LSP started for " .. vim.fn.expand("%:t"))
+                -- Start direct bij het openen van C# files
+                vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+                    pattern = "*.cs",
+                    callback = function()
+                        -- Check of LSP al draait
+                        local clients = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
+                        local has_roslyn = false
+                        for _, client in ipairs(clients) do
+                            if client.name == "roslyn" then
+                                has_roslyn = true
+                                break
+                            end
+                        end
+                        
+                        if not has_roslyn then
+                            vim.lsp.start({
+                                name = "roslyn",
+                                cmd = {
+                                    roslyn_cmd,
+                                    "--logLevel=Information",
+                                    "--extensionLogDirectory=" .. log_dir,
+                                    "--stdio",
+                                },
+                                root_dir = vim.fn.getcwd(),
+                                capabilities = require('cmp_nvim_lsp').default_capabilities(),
+                            })
                         end
                     end,
                 })
-                
-                -- Start ook voor al geopende C# buffers
-                for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-                    if vim.api.nvim_buf_is_loaded(buf) then
-                        local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
-                        if ft == "cs" then
-                            vim.lsp.enable("roslyn")
-                        end
-                    end
-                end
-            else
-                vim.notify(
-                    "Roslyn LSP not found. Install roslyn-ls via Nix.",
-                    vim.log.levels.ERROR
-                )
             end
 
             -- Autocompletion setup
@@ -271,5 +232,35 @@ return {
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
             end
         end,
+
+        -- DEBUG: Check LSP status
+        vim.api.nvim_create_user_command('LspDebug', function()
+            print("=== LSP DEBUG ===")
+            
+            -- Check Roslyn binary
+            local roslyn_cmd = vim.fn.exepath("Microsoft.CodeAnalysis.LanguageServer")
+            print("Roslyn path: " .. (roslyn_cmd ~= "" and roslyn_cmd or "NOT FOUND"))
+            
+            -- Check if in CS file
+            print("Current filetype: " .. vim.bo.filetype)
+            
+            -- Check active clients
+            local clients = vim.lsp.get_clients()
+            print("Active clients: " .. #clients)
+            for _, client in ipairs(clients) do
+                print("  - " .. client.name .. " (id: " .. client.id .. ")")
+            end
+            
+            -- Check current buffer's root dir
+            local root_dir = vim.fs.root(0, {".csproj", ".sln", ".git"})
+            print("Root directory: " .. (root_dir or "NOT FOUND"))
+            
+            -- List files in current directory
+            print("Files in current dir:")
+            local files = vim.fn.glob("*", false, true)
+            for i = 1, math.min(#files, 5) do
+                print("  - " .. files[i])
+            end
+        end, {}),
     },
 }
