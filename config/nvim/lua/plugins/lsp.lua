@@ -37,22 +37,25 @@ return {
                         vim.lsp.buf.format { async = true }
                     end, opts)
                     
-                    -- Extra: diagnostics keybinds
                     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
                     vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
                     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
                     vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+                    
+                    -- Bevestiging dat LSP attached
+                    print("LSP attached: " .. vim.lsp.get_client_by_id(ev.data.client_id).name)
                 end,
             })
 
-            -- ROSLYN LSP SETUP met correcte argumenten
+            -- ROSLYN LSP SETUP
             local roslyn_cmd = vim.fn.exepath("Microsoft.CodeAnalysis.LanguageServer")
             
             if roslyn_cmd ~= "" then
-                -- Maak een log directory voor Roslyn
+                -- Maak log directory
                 local log_dir = vim.fn.stdpath("cache") .. "/roslyn"
                 vim.fn.mkdir(log_dir, "p")
                 
+                -- Configureer Roslyn
                 vim.lsp.config("roslyn", {
                     cmd = {
                         roslyn_cmd,
@@ -62,8 +65,19 @@ return {
                     filetypes = { "cs" },
                     root_markers = { "*.sln", "*.csproj", ".git" },
                     capabilities = capabilities,
-                    -- Optionele settings voor betere ervaring
                     settings = {
+                        ["csharp"] = {
+                            -- Completion settings
+                            ["completion"] = {
+                                ["showCompletionItemKind"] = true,
+                                ["showSnippets"] = true,
+                            },
+                            -- IntelliSense settings
+                            ["intelliSense"] = {
+                                ["enableImportCompletion"] = true,
+                                ["enableMethodGroupCompletion"] = true,
+                            },
+                        },
                         ["csharp|inlay_hints"] = {
                             csharp_enable_inlay_hints_for_implicit_object_creation = true,
                             csharp_enable_inlay_hints_for_implicit_variable_types = true,
@@ -81,17 +95,32 @@ return {
                     },
                 })
                 
-                -- Enable voor C# files
-                vim.api.nvim_create_autocmd("FileType", {
+                -- BELANGRIJK: Enable voor ALLE C# buffers, niet alleen nieuwe
+                vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
                     pattern = "cs",
-                    callback = function()
-                        vim.lsp.enable("roslyn")
+                    callback = function(args)
+                        -- Check of LSP al draait voor deze buffer
+                        local clients = vim.lsp.get_clients({ bufnr = args.buf, name = "roslyn" })
+                        if #clients == 0 then
+                            vim.lsp.enable("roslyn")
+                            print("Roslyn LSP started for " .. vim.fn.expand("%:t"))
+                        end
                     end,
                 })
+                
+                -- Start ook voor al geopende C# buffers
+                for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                    if vim.api.nvim_buf_is_loaded(buf) then
+                        local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+                        if ft == "cs" then
+                            vim.lsp.enable("roslyn")
+                        end
+                    end
+                end
             else
                 vim.notify(
-                    "Roslyn LSP not found at: " .. roslyn_cmd,
-                    vim.log.levels.WARN
+                    "Roslyn LSP not found. Install roslyn-ls via Nix.",
+                    vim.log.levels.ERROR
                 )
             end
 
@@ -108,6 +137,9 @@ return {
                 window = {
                     completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered(),
+                },
+                completion = {
+                    completeopt = 'menu,menuone,noinsert',  -- Toon altijd het menu
                 },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -135,45 +167,99 @@ return {
                     end, { 'i', 's' }),
                 }),
                 sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
+                    { name = 'nvim_lsp', priority = 1000 },
+                    { name = 'luasnip', priority = 750 },
                 }, {
-                    { name = 'buffer' },
-                    { name = 'path' },
+                    { name = 'buffer', priority = 500 },
+                    { name = 'path', priority = 250 },
                 }),
                 formatting = {
+                    fields = { "kind", "abbr", "menu" },
                     format = function(entry, vim_item)
-                        -- Toon van welke source de completion komt
+                        -- Icons voor verschillende types
+                        local kind_icons = {
+                            Text = "󰉿",
+                            Method = "󰆧",
+                            Function = "󰊕",
+                            Constructor = "",
+                            Field = "󰜢",
+                            Variable = "󰀫",
+                            Class = "󰠱",
+                            Interface = "",
+                            Module = "",
+                            Property = "󰜢",
+                            Unit = "󰑭",
+                            Value = "󰎠",
+                            Enum = "",
+                            Keyword = "󰌋",
+                            Snippet = "",
+                            Color = "󰏌",
+                            File = "󰈙",
+                            Reference = "󰈇",
+                            Folder = "󰉋",
+                            EnumMember = "",
+                            Constant = "󰏿",
+                            Struct = "󰙅",
+                            Event = "",
+                            Operator = "󰆕",
+                            TypeParameter = "",
+                        }
+                        
+                        -- Icon + kind naam
+                        vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind] or "", vim_item.kind)
+                        
+                        -- Source indicator
                         vim_item.menu = ({
                             nvim_lsp = "[LSP]",
                             luasnip = "[Snippet]",
                             buffer = "[Buffer]",
                             path = "[Path]",
                         })[entry.source.name]
+                        
                         return vim_item
                     end,
                 },
             })
 
-            -- Diagnostics configuratie
+            -- Diagnostics configuratie - LIVE ERRORS
             vim.diagnostic.config({
+                -- Toon errors inline als virtual text
                 virtual_text = {
-                    prefix = '●',
+                    spacing = 4,
                     source = "if_many",
+                    prefix = '●',
+                    -- Format de error messages
+                    format = function(diagnostic)
+                        if diagnostic.severity == vim.diagnostic.severity.ERROR then
+                            return string.format("❌ %s", diagnostic.message)
+                        elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+                            return string.format("⚠️  %s", diagnostic.message)
+                        elseif diagnostic.severity == vim.diagnostic.severity.HINT then
+                            return string.format("💡 %s", diagnostic.message)
+                        else
+                            return string.format("ℹ️  %s", diagnostic.message)
+                        end
+                    end,
                 },
+                -- Toon icons in de gutter (links van line numbers)
                 signs = true,
-                update_in_insert = false,
+                -- UPDATE TIJDENS HET TYPEN (dit is belangrijk!)
+                update_in_insert = true,  -- ⬅️ VERANDER DIT NAAR true
+                -- Underline de foute code
                 underline = true,
+                -- Sorteer op severity (errors eerst)
                 severity_sort = true,
+                -- Floating window settings
                 float = {
                     border = 'rounded',
                     source = 'always',
                     header = '',
                     prefix = '',
+                    focusable = true,
                 },
             })
 
-            -- Diagnostic symbols in de gutter
+            -- Diagnostic symbols
             local signs = { 
                 Error = "󰅚 ", 
                 Warn = "󰀪 ", 
