@@ -231,6 +231,11 @@ in
     ninja
     python3
 
+    # bash tools
+    bats # for testing shell scripts
+    gum # for fancy shell UIs
+
+
     # Misc
     blueberry # bluetooth management tool
 
