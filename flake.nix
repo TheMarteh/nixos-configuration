@@ -25,25 +25,27 @@
     };
     in
         {
-    nixosConfigurations.nixos-steal = nixpkgs.lib.nixosSystem {
-      inherit system;
+    nixosConfigurations =  {
+      nixos-steal = nixpkgs.lib.nixosSystem {
+        inherit system;
 
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.steal = import ./home.nix;
-            backupFileExtension = "backup";
+        modules = [
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.steal = import ./home.nix;
+              backupFileExtension = "backup";
 
-            extraSpecialArgs = {
-              inherit pkgs-unstable;
+              extraSpecialArgs = {
+                inherit pkgs-unstable;
+              };
             };
-          };
-        }
-      ];
+          }
+        ];
+      };
     };
   };
 }
