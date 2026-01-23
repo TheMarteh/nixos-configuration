@@ -1,0 +1,100 @@
+@define-color fg #cdd6f4;
+@define-color bg #1a1b26;
+@define-color muted #7f849c;
+@define-color accent #89b4fa;
+
+/* ---------- GLOBAL ---------- */
+* {
+    font-family: "CommitMono Nerd Font";
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.notification-row {
+    outline: none;
+}
+
+/* ---------- CONTROL CENTER ---------- */
+.control-center {
+    background: @bg;
+    color: @fg;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.control-center-list {
+    background: transparent;
+}
+
+/* ---------- HEADER ---------- */
+.widget-title {
+    margin-bottom: 8px;
+}
+
+.widget-title>label {
+    font-size: 16px;
+}
+
+.widget-title>button {
+    background: transparent;
+    color: @muted;
+    border-radius: 6px;
+    padding: 2px 8px;
+}
+
+.widget-title>button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: @fg;
+}
+
+/* ---------- NOTIFICATION ---------- */
+.notification {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+}
+
+.notification.critical {
+    border-left: 3px solid #f38ba8;
+}
+
+.notification.normal {
+    border-left: 3px solid @accent;
+}
+
+.notification.low {
+    border-left: 3px solid @muted;
+}
+
+/* ---------- CONTENT ---------- */
+.notification-content {
+    margin-left: 8px;
+}
+
+.notification-title {
+    font-size: 14px;
+}
+
+.notification-body {
+    font-size: 13px;
+    color: @muted;
+    margin-top: 4px;
+}
+
+/* ---------- ICON ---------- */
+.notification-icon {
+    margin-right: 8px;
+}
+
+/* ---------- CLOSE BUTTON ---------- */
+.notification-close-button {
+    background: transparent;
+    color: @muted;
+    border-radius: 4px;
+}
+
+.notification-close-button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: @fg;
+}

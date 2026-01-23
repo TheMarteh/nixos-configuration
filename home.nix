@@ -8,6 +8,7 @@ let
     nvim = "nvim";
     hypr = "hypr";
     waybar = "waybar";
+    swaync = "swaync";
   };
   androidEmu = pkgs.androidenv.emulateApp {
     name = "emulate-MyAndroidApp";
