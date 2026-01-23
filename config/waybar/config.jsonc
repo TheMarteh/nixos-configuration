@@ -10,7 +10,9 @@
         "hyprland/window",
         "custom/sep"
     ],
-    "modules-center": ["clock"],
+    "modules-center": [
+        "clock"
+    ],
     "modules-right": [
         "pulseaudio",
         "custom/sep",
@@ -20,9 +22,9 @@
         "custom/sep",
         "cpu",
         "custom/sep",
-        "memory",
+        "custom/notifications",
         "custom/sep",
-        "battery"
+        "memory"
     ],
     "hyprland/workspaces": {
         "disable-scroll": true,
@@ -50,15 +52,19 @@
             "5": []
         }
     },
-
     "clock": {
         "format": "{:L%A %H:%M}",
         "format-alt": "{:L%d %B W%V %Y}",
         "tooltip": false
     },
-
     "network": {
-        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "format-icons": [
+            "󰤯",
+            "󰤟",
+            "󰤢",
+            "󰤥",
+            "󰤨"
+        ],
         "format": "{icon}",
         "format-wifi": "{icon}",
         "format-ethernet": "󰀂",
@@ -70,25 +76,44 @@
         "spacing": 1,
         "on-click": "omarchy-launch-wifi"
     },
-
     "cpu": {
         "interval": 5,
         "format": "󰍛",
         "on-click": "$TERMINAL -e btop"
     },
-
     "memory": {
-        "format": "Mem: {used}GiB"
+        "format": "Mem: {used}/{total}GiB",
     },
-
     "battery": {
         "format": "{capacity}% {icon}",
         "format-discharging": "{icon}",
         "format-charging": "{icon}",
         "format-plugged": "",
         "format-icons": {
-        "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-        "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+            "charging": [
+                "󰢜",
+                "󰂆",
+                "󰂇",
+                "󰂈",
+                "󰢝",
+                "󰂉",
+                "󰢞",
+                "󰂊",
+                "󰂋",
+                "󰂅"
+            ],
+            "default": [
+                "󰁺",
+                "󰁻",
+                "󰁼",
+                "󰁽",
+                "󰁾",
+                "󰁿",
+                "󰂀",
+                "󰂁",
+                "󰂂",
+                "󰁹"
+            ]
         },
         "format-full": "󰂅",
         "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
@@ -96,11 +121,10 @@
         "interval": 5,
         "on-click": "omarchy-menu power",
         "states": {
-        "warning": 20,
-        "critical": 10
+            "warning": 20,
+            "critical": 10
         }
     },
-
     "bluetooth": {
         "format": "",
         "format-disabled": "󰂲",
@@ -108,7 +132,6 @@
         "tooltip-format": "Devices connected: {num_connections}",
         "on-click": "blueberry"
     },
-
     "pulseaudio": {
         "format": "{icon}",
         "on-click": "$TERMINAL --class=Wiremix -e wiremix",
@@ -117,12 +140,32 @@
         "scroll-step": 5,
         "format-muted": "",
         "format-icons": {
-        "default": ["", "", ""]
+            "default": [
+                "",
+                "",
+                ""
+            ]
         }
     },
-    
+    "custom/notifications": {
+        "exec": "swaync-client -swb",
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂜",
+            "dnd-notification": "󰂠",
+            "dnd-none": "󰪓",
+            "inhibited-notification": "󰂛",
+            "inhibited-none": "󰪑",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰪑"
+        },
+        "on-click": "swaync-client -t",
+        "tooltip": false
+    },
     "custom/sep": {
-        "format": " ", 
+        "format": " ",
         "interval": 0
     }
 }

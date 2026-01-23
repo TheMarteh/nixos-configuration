@@ -1,10 +1,10 @@
-@define-color fg    #cdd6f4; 
-@define-color bg    #1a1b26; 
+@define-color fg #cdd6f4;
+@define-color bg #1a1b26;
 
 * {
-    font-family: "JetBrainsMono Nerd Font", monospace;
-    font-size: 16px;
-    font-weight: bold;
+  font-family: "CommitMono Nerd Font", monospace;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 #workspaces button {
@@ -15,8 +15,8 @@
 }
 
 window#waybar {
-    background-color: @bg;
-    color: @fg;
+  background-color: @bg;
+  color: @fg;
 }
 
 .modules-left {
@@ -25,4 +25,14 @@ window#waybar {
 
 .modules-right {
   margin-right: 24px;
+}
+
+#network,
+#cpu,
+#memory,
+#battery,
+#bluetooth,
+#pulseaudio,
+#custom-notifications {
+  padding-right: 8px;
 }
