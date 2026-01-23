@@ -127,12 +127,8 @@
     enable = true;
     pulse.enable = true;
   };
-
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-    loadModels = [ "gemma3:latest"];
-  };
+  
+  # Open WebUI service
   services.open-webui.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).

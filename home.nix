@@ -128,6 +128,14 @@ in
   };
 
 
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+    # loadModels = [ "qwen3:1.7b"];
+  };
+
+
+
   # === Programma configuraties ===
   programs.git = { 
     enable = true;
