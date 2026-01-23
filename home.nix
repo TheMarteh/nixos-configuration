@@ -292,6 +292,7 @@ in
     grim
     slurp
     wl-clipboard
+    hyprland
 
     # Theme packages
     adwaita-qt
