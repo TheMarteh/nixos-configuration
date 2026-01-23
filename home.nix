@@ -104,6 +104,12 @@ in
     package = pkgs-unstable.swww;
   };
 
+  # mako is nodig voor notificaties onder Wayland
+  services.mako = {
+    enable = true;
+    package = pkgs-unstable.mako;
+  };
+
   # Pinentry voor wachtwoord prompts
   services.gpg-agent = {
     enable = true;
@@ -283,6 +289,9 @@ in
     waybar
     brightnessctl
     playerctl
+    grim
+    slurp
+    wl-clipboard
 
     # Theme packages
     adwaita-qt
