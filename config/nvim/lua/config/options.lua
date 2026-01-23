@@ -9,3 +9,6 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.autoindent = true
 vim.opt.expandtab = true
+
+-- auto copy to system clipboard
+vim.api.nvim_set_option("clipboard", "unnamedplus")
