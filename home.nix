@@ -281,6 +281,8 @@ in
     wofi
     rofi
     waybar
+    brightnessctl
+    playerctl
 
     # Theme packages
     adwaita-qt
