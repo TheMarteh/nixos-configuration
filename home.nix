@@ -254,6 +254,7 @@ in
     tree
     lazygit
     lazydocker
+    bat
 
     # Key wallet
     kdePackages.kwallet
