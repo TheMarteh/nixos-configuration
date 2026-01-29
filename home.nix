@@ -133,6 +133,7 @@ in
     enable = true;
     acceleration = "cuda";
     # loadModels = [ "qwen3:1.7b"];
+    package = pkgs-unstable.ollama;
   };
 
 
@@ -216,9 +217,6 @@ in
     mutableExtensionsDir = true;
   };
 
-  # Claude code
-  programs.claude-code.enable = true;
-
   # === Geïnstalleerde pakketten ===
   home.packages = with pkgs; [
     # Development tools
@@ -239,6 +237,7 @@ in
     flutter
     ninja
     python3
+    pkgs-unstable.claude-code
 
     # bash tools
     bats # for testing shell scripts

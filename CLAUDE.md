@@ -8,12 +8,17 @@ This is a personal NixOS configuration repository using Nix flakes and home-mana
 
 ## Common Commands
 
+**Note**: The following bash aliases are defined in home.nix:
+- `nrs` - Rebuild and switch system configuration
+- `nfu` - Update all flake inputs
+- `btw` - Display "I use NixOS, btw"
+
 ### System Rebuild
 ```bash
 # Rebuild and switch system configuration
 sudo nixos-rebuild switch --flake ~/nixos-configuration#nixos-steal
 
-# Using bash alias (defined in home.nix)
+# Using alias
 nrs
 ```
 
@@ -22,7 +27,7 @@ nrs
 # Update all flake inputs
 nix flake update --flake ~/nixos-configuration
 
-# Using bash alias
+# Using alias
 nfu
 
 # Show flake metadata
@@ -48,6 +53,8 @@ sudo nix-collect-garbage --delete-older-than 7d
 sudo nix-collect-garbage -d
 ```
 
+**Note**: The store is auto-optimized (hard-linking identical files) via `nix.settings.auto-optimise-store = true`.
+
 ## Architecture
 
 ### Flake Structure (flake.nix)
@@ -68,12 +75,13 @@ This configuration uses both stable and unstable nixpkgs:
 - Access unstable packages in home.nix via `pkgs-unstable.package-name`
 
 ### Dotfiles Management (home.nix)
-Configuration files in `./config/` are symlinked to `~/.config/` using out-of-store symlinks:
+Configuration files in `./config/` are symlinked to `~/.config/` using out-of-store symlinks (`config.lib.file.mkOutOfStoreSymlink`):
 - **nvim**: Neovim configuration (Lua-based with lazy.nvim plugin manager)
 - **hypr**: Hyprland compositor configuration (split into multiple .conf files)
 - **waybar**: Status bar configuration
+- **swaync**: Notification center configuration
 
-The symlink approach (`create_symlink` helper) allows editing configs directly without rebuilding.
+The out-of-store symlink approach allows editing configs directly in `~/nixos-configuration/config/` without triggering a home-manager rebuild. Changes take effect immediately (app restart may be required).
 
 ### System Components
 - **Display Server**: Wayland (Hyprland compositor)
@@ -85,11 +93,18 @@ The symlink approach (`create_symlink` helper) allows editing configs directly w
 
 ### Development Environment
 - **.NET**: dotnet-sdk_10 from unstable, with Roslyn LSP and OmniSharp
+  - `DOTNET_ROOT` and telemetry opt-out configured in session variables
+  - VSCode uses FHS wrapper with .NET SDK included for full compatibility
 - **Android**: Android Studio, ADB tools, emulator configured via androidenv
+  - Emulator instance: API 36, x86_64, Google APIs with Play Store
 - **Flutter**: Configured with Wayland environment variables
 - **Git**: Configured with user "TheMarteh" <martijnfs@me.com>
-- **VSCode**: Uses FHS wrapper for .NET compatibility
-- **Neovim**: Custom Lua configuration with LSP support
+  - GitHub CLI (`gh`) with credential helper enabled
+- **VSCode**: Uses FHS wrapper (`vscode.fhsWithPackages`) for .NET compatibility
+  - Extensions: C# Dev Kit, OmniSharp, .NET Runtime
+  - Mutable extensions directory enabled for synced extensions
+- **Neovim**: Custom Lua configuration with LSP support (in ./config/nvim)
+- **Claude Code**: Enabled via `programs.claude-code.enable = true`
 
 ### Theme System
 - **GTK/GNOME apps**: Adwaita-dark theme
@@ -122,3 +137,14 @@ When updating flake inputs, ensure home-manager release matches nixpkgs version 
 
 ### Experimental Features
 Flakes and nix-command are enabled system-wide in `configuration.nix`.
+
+### Performance Optimizations
+- **Auto-optimize store**: Enabled (`nix.settings.auto-optimise-store = true`) - automatically hard-links identical files
+- **Download buffer**: Increased to 500MB (`download-buffer-size = 524288000`) for faster downloads
+- **Trusted users**: root and steal can use extra Nix features without sudo
+
+### Additional Services
+- **Ollama**: AI model serving with CUDA acceleration (home-manager service)
+- **Open WebUI**: Web interface for Ollama (system service)
+- **KWallet**: KDE wallet service for credential management (user service)
+- **swww**: Wallpaper daemon (from unstable, home-manager service)
