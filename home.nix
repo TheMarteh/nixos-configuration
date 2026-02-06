@@ -187,33 +187,15 @@ in
     };
   };
 
-  # VSCode met .NET ondersteuning
   programs.vscode = {
     enable = true;
-    # Gebruik FHS wrapper voor betere .NET compatibiliteit
-    package = pkgs-unstable.vscode.fhsWithPackages (ps: with ps; [
-      dotnet-sdk_10
-      zlib
-      openssl
-      icu
-    ]);
+    package = pkgs-unstable.vscode;
     
-    profiles.default = {
-      extensions = with pkgs.vscode-extensions; [
-        ms-dotnettools.csharp
-        ms-dotnettools.csdevkit
-        ms-dotnettools.vscode-dotnet-runtime
-      ];
-      # Removed user settings because it clashed
-      # with the vscode sync'ed settings.
-      # userSettings = {
-      #   # .NET specifieke settings
-      #   "omnisharp.useModernNet" = true;
-      #   # Smart commit
-      #   "git.confirmSync" = false;
-      #   "git.enableSmartCommit" = true;
-      # };
-    };
+    extensions = with pkgs.vscode-extensions; [
+      ms-dotnettools.csharp
+      ms-dotnettools.csdevkit
+      ms-dotnettools.vscode-dotnet-runtime
+    ];
     mutableExtensionsDir = true;
   };
 
@@ -276,6 +258,9 @@ in
     # pkgs-unstable.vscode # Code editor (geen FHS wrapper)
     zed-editor # Alternatieve code editor
     discord # Chat app
+
+    # 3d print software
+    cura-appimage
 
     # Wayland/Hyprland tools
     kitty
