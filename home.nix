@@ -44,7 +44,6 @@ in
     QT_STYLE_OVERRIDE = "adwaita-dark";
     
     # .NET
-    DOTNET_ROOT = "${pkgs-unstable.dotnet-sdk_10}";
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
 
     # Dit zou helpen bij Electron apps op Wayland
@@ -55,6 +54,9 @@ in
     # Voor Flutter apps op Wayland
     ANDROID_EMULATOR_USE_SYSTEM_LIBS = "1";
     QT_QPA_PLATFORM = "xcb";
+
+    # Flutter Linux build dependencies (pkg-config paths)
+    PKG_CONFIG_PATH = "${pkgs.libsecret.dev}/lib/pkgconfig:${pkgs.glib.dev}/lib/pkgconfig";
   };
 
   
@@ -189,8 +191,32 @@ in
 
   programs.vscode = {
     enable = true;
-    package = pkgs-unstable.vscode;
-    
+    package = pkgs-unstable.vscode.fhsWithPackages (ps: with ps; [
+      # .NET SDK and runtime for debugging
+      pkgs-unstable.dotnet-sdk_10
+
+      # Required for vsdbg (the .NET debugger)
+      icu
+      openssl
+      zlib
+      curl
+
+      # Common build dependencies
+      gcc
+      glibc
+
+      # Flutter development
+      flutter
+      cmake
+      ninja
+      pkg-config
+      gtk3
+      glib
+      libsecret
+      pcre2
+      xz
+    ]);
+
     extensions = with pkgs.vscode-extensions; [
       ms-dotnettools.csharp
       ms-dotnettools.csdevkit
@@ -220,6 +246,9 @@ in
     ninja
     python3
     pkgs-unstable.claude-code
+    libsecret
+    pkg-config
+    unzip
 
     # bash tools
     bats # for testing shell scripts
@@ -231,7 +260,7 @@ in
 
     # Terminal tools
     neofetch
-    btop
+    pkgs-unstable.btop
     tree
     lazygit
     lazydocker
