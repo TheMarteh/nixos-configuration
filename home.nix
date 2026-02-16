@@ -260,7 +260,7 @@ in
 
     # Terminal tools
     neofetch
-    pkgs-unstable.btop
+    pkgs-unstable.btop-cuda
     tree
     lazygit
     lazydocker
