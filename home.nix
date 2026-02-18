@@ -156,7 +156,7 @@ in
         normal = {
           family = "CommitMono Nerd Font Mono";
         };
-        size = 16.0;
+        size = 12.0;
       };
     };
   };
