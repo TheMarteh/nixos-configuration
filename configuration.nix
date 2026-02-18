@@ -26,7 +26,6 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    xwayland.force_zero_scaling = true; # Fix blurry apps in Hyprland
     withUWSM = true;
   };
 
