@@ -288,6 +288,9 @@ in
     zed-editor # Alternatieve code editor
     discord # Chat app
 
+    # Zen Browser
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+
     # 3d print software
     cura-appimage
 
