@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, zen-browser, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/nixos-configuration/config";
@@ -275,6 +275,7 @@ in
     _1password-cli # password manager CLI
     _1password-gui # password manager GUI
     pkgs-unstable.bolt-launcher # osrs launcher
+    zen-browser.packages.${pkgs.system}.default # Zen browser
     vivaldi # web browser
     kdePackages.dolphin # File manager
     pkgs-unstable.whatsapp-electron # WhatsApp desktop client
@@ -287,9 +288,6 @@ in
     # pkgs-unstable.vscode # Code editor (geen FHS wrapper)
     zed-editor # Alternatieve code editor
     discord # Chat app
-
-    # Zen Browser
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # 3d print software
     cura-appimage
