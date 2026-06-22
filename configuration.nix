@@ -66,8 +66,9 @@
   # Docker support
   virtualisation.docker = {
     enable = true;
+    package = pkgs.docker_29;
     rootless = {
-      enable = true;      # Optioneel: rootless mode
+      enable = true;
       setSocketVariable = true;
     };
   };
