@@ -133,9 +133,7 @@ in
 
   services.ollama = {
     enable = true;
-    acceleration = "cuda";
-    # loadModels = [ "qwen3:1.7b"];
-    package = pkgs-unstable.ollama;
+    package = pkgs-unstable.ollama-cuda;
   };
 
 
