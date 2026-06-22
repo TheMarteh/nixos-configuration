@@ -66,8 +66,10 @@
   # Docker support
   virtualisation.docker = {
     enable = true;
+    package = pkgs.docker_29;
     rootless = {
       enable = true;
+      package = pkgs.docker_29;
       setSocketVariable = true;
     };
   };
@@ -153,7 +155,6 @@
     curl
     git
     tmux
-    docker
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
