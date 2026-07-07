@@ -46,6 +46,9 @@ in
     # .NET
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
 
+    # Java/AWT apps under XWayland (e.g. RuneLite via Bolt)
+    _JAVA_AWT_WM_NONREPARENTING = "1"; # fixes blank/grey windows & resize glitches on tiling WMs
+ 
     # Dit zou helpen bij Electron apps op Wayland
     ELECTRON_ENABLE_WAYLAND = "1";
     NIXOS_OZONE_WL = "1";
