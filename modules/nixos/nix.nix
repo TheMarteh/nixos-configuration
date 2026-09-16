@@ -12,6 +12,12 @@
     ];
     auto-optimise-store = true;
     download-buffer-size = 524288000; # 500MB
+
+    # CUDA-pakketten (ollama-cuda, btop-cuda) staan niet op cache.nixos.org
+    extra-substituters = [ "https://cache.nixos-cuda.org" ];
+    extra-trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+    ];
   };
 
   nixpkgs.config = {

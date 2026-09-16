@@ -14,13 +14,11 @@
   };
 
   home.packages = with pkgs; [
-    kitty
-
     # CLI tools
     ripgrep
     fd
     unzip
-    neofetch
+    fastfetch
     pkgs-unstable.btop-cuda
     tree
     bat
