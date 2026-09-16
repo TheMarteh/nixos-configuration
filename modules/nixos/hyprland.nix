@@ -30,9 +30,4 @@
     ];
     config.common.default = "*";
   };
-
-  # Systeembrede dark mode preference
-  environment.sessionVariables = {
-    GTK_THEME = "Adwaita:dark";
-  };
 }

@@ -8,8 +8,8 @@
     download-buffer-size = 524288000; # 500MB
   };
 
-  nixpkgs.config.allowUnfree = true;
   nixpkgs.config = {
-      android_sdk.accept_license = true;
-    };
+    allowUnfree = true;
+    android_sdk.accept_license = true;
+  };
 }

@@ -19,6 +19,5 @@
     swaynotificationcenter
     libnotify
     wl-clipboard
-    hyprland
   ];
 }
