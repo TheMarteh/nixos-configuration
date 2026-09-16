@@ -104,10 +104,10 @@ in
 
 
   # === Services ===
-  # awww service voor wallpapers en compositing
-  services.awww = {
+  # swww service voor wallpapers en compositing
+  services.swww = {
     enable = true;
-    package = pkgs-unstable.awww;
+    package = pkgs-unstable.swww;
   };
 
   # Pinentry voor wachtwoord prompts
