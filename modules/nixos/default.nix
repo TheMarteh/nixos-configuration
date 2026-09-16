@@ -7,6 +7,7 @@
     ./locale.nix
     ./users.nix
     ./hyprland.nix
+    ./keyring.nix
     ./nvidia.nix
     ./audio.nix
     ./bluetooth.nix
