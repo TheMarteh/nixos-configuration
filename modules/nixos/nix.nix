@@ -12,4 +12,15 @@
     allowUnfree = true;
     android_sdk.accept_license = true;
   };
+
+  # nh: nettere wrapper rond nixos-rebuild (toont diff) + automatische garbage collection
+  programs.nh = {
+    enable = true;
+    flake = "/home/steal/nixos-configuration";
+    clean = {
+      enable = true;
+      dates = "weekly";
+      extraArgs = "--keep-since 14d --keep 5";
+    };
+  };
 }
