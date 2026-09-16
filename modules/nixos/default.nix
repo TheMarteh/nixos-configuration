@@ -10,7 +10,6 @@
     ./nvidia.nix
     ./audio.nix
     ./bluetooth.nix
-    ./input.nix
     ./docker.nix
     ./virtualisation.nix
     ./fonts.nix
