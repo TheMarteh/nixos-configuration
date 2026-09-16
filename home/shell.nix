@@ -5,8 +5,9 @@
     enable = true;
     shellAliases = {
       btw = "echo I use NixOS, btw";
-      nrs = "sudo nixos-rebuild switch --flake ~/nixos-configuration#nixos-steal";
+      nrs = "nh os switch"; # rebuild + switch, toont eerst een diff (vraagt zelf om sudo)
       nfu = "nix flake update --flake ~/nixos-configuration";
+      nrsu = "nh os switch --update"; # nfu + nrs in één keer
     };
   };
 }
