@@ -35,13 +35,13 @@
         inherit system;
 
         modules = [
-          ./configuration.nix
+          ./hosts/nixos-steal
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.steal = import ./home.nix;
+              users.steal = import ./home;
               backupFileExtension = "backup";
 
               extraSpecialArgs = {
