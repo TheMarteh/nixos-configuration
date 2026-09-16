@@ -11,6 +11,6 @@
 
     # Nix LSP + formatter
     nil
-    nixpkgs-fmt
+    nixfmt
   ];
 }

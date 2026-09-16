@@ -30,6 +30,9 @@
     };
     in
         {
+    # `nix fmt` formatteert alle .nix-bestanden
+    formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+
     nixosConfigurations =  {
       nixos-steal = nixpkgs.lib.nixosSystem {
         inherit system;
