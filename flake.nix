@@ -41,6 +41,18 @@
       # `nix fmt` formatteert alle .nix-bestanden
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
 
+      # Projecttemplates: `nix flake init -t ~/nixos-configuration#dotnet`
+      templates = {
+        dotnet = {
+          path = ./templates/dotnet;
+          description = ".NET devShell (dotnet-ef, csharpier, roslyn-ls) met direnv";
+        };
+        flutter = {
+          path = ./templates/flutter;
+          description = "Flutter Linux build-dependencies met direnv";
+        };
+      };
+
       nixosConfigurations = {
         nixos-steal = nixpkgs.lib.nixosSystem {
           inherit system;

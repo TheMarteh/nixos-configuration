@@ -4,7 +4,7 @@
   # Neovim config zelf staat in ./config/nvim (zie dotfiles.nix)
   home.packages = with pkgs; [
     neovim
-    gcc
+    gcc # compileert treesitter parsers
     tree-sitter
     nodejs
     python3

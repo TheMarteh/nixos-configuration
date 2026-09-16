@@ -1,16 +1,18 @@
 { pkgs, pkgs-unstable, ... }:
 
+let
+  dotnet = pkgs-unstable.dotnet-sdk_10;
+in
 {
+  # Globale SDK zodat Rider en losse `dotnet` commando's werken buiten een devShell.
+  # Projecttools (dotnet-ef, csharpier, roslyn-ls) staan in templates/dotnet.
   home.sessionVariables = {
+    DOTNET_ROOT = "${dotnet}/share/dotnet";
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
   };
 
-  home.packages = with pkgs; [
-    pkgs-unstable.dotnet-sdk_10
-    roslyn-ls
-    omnisharp-roslyn
-    pkgs-unstable.csharpier # C# code formatter
-    dotnet-ef # Entity Framework CLI
-    jetbrains.rider # .NET IDE
+  home.packages = [
+    dotnet
+    pkgs.jetbrains.rider
   ];
 }

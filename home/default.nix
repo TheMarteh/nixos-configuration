@@ -13,6 +13,7 @@
     ./browsers.nix
     ./apps.nix
     ./ai.nix
+    ./dev/direnv.nix
     ./dev/neovim.nix
     ./dev/dotnet.nix
     ./dev/flutter-android.nix
