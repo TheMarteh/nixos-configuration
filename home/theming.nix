@@ -1,11 +1,9 @@
 { pkgs, ... }:
 
 {
-  home.sessionVariables = {
-    GTK_THEME = "Adwaita:dark";
-    QT_QPA_PLATFORMTHEME = "adwaita";
-    QT_STYLE_OVERRIDE = "adwaita-dark";
-  };
+  # Dark mode voorkeur voor GTK4/libadwaita apps en portals.
+  # (Geen GTK_THEME env var: die breekt de styling van libadwaita apps.)
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
   # GTK Theme (voor Firefox, GNOME apps, etc.)
   gtk = {
@@ -41,14 +39,10 @@
     platformTheme.name = "adwaita";
     style = {
       name = "adwaita-dark";
-      package = pkgs.adwaita-qt;
+      package = [
+        pkgs.adwaita-qt
+        pkgs.adwaita-qt6
+      ];
     };
   };
-
-  home.packages = with pkgs; [
-    adwaita-qt
-    adwaita-qt6
-    gnome-themes-extra
-    adwaita-icon-theme
-  ];
 }
