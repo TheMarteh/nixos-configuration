@@ -13,10 +13,8 @@ in
 
 {
   # Mapping van dotfiles in ./config naar $HOME/.config
-  xdg.configFile = builtins.mapAttrs
-  (name: subpath: {
+  xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
     recursive = true;
-  })
-  configs;
+  }) configs;
 }

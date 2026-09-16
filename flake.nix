@@ -10,7 +10,7 @@
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs"; 
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser = {
@@ -19,42 +19,50 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, zen-browser, ... }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      zen-browser,
+      ...
+    }:
     let
-    system = "x86_64-linux";
-    
-    # Maak pkgs-unstable beschikbaar
-    pkgs-unstable = import nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-    in
-        {
-    # `nix fmt` formatteert alle .nix-bestanden
-    formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+      system = "x86_64-linux";
 
-    nixosConfigurations =  {
-      nixos-steal = nixpkgs.lib.nixosSystem {
+      # Maak pkgs-unstable beschikbaar
+      pkgs-unstable = import nixpkgs-unstable {
         inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      # `nix fmt` formatteert alle .nix-bestanden
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
 
-        modules = [
-          ./hosts/nixos-steal
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.steal = import ./home;
-              backupFileExtension = "backup";
+      nixosConfigurations = {
+        nixos-steal = nixpkgs.lib.nixosSystem {
+          inherit system;
 
-              extraSpecialArgs = {
-                inherit pkgs-unstable;
-                inherit zen-browser;
+          modules = [
+            ./hosts/nixos-steal
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.steal = import ./home;
+                backupFileExtension = "backup";
+
+                extraSpecialArgs = {
+                  inherit pkgs-unstable;
+                  inherit zen-browser;
+                };
               };
-            };
-          }
-        ];
+            }
+          ];
+        };
       };
     };
-  };
 }
