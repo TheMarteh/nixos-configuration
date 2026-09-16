@@ -4,9 +4,9 @@
   users.users.steal = {
     isNormalUser = true;
     extraGroups = [
-      "wheel" # Enable ‘sudo’ for the user.
-      "docker" # Enable docker usage for the user.
-      "adbusers" # Enable adb usage for the user.
+      "wheel" # sudo
+      "docker" # docker zonder sudo
+      "libvirtd" # virt-manager zonder wachtwoordprompt
     ];
     # Gebruikerspakketten staan in ./home
   };
