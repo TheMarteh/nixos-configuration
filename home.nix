@@ -104,10 +104,10 @@ in
 
 
   # === Services ===
-  # Swww service voor wallpapers en compositing
-  services.swww = {
+  # awww service voor wallpapers en compositing
+  services.awww = {
     enable = true;
-    package = pkgs-unstable.swww;
+    package = pkgs-unstable.awww;
   };
 
   # Pinentry voor wachtwoord prompts
@@ -218,7 +218,7 @@ in
       xz
     ]);
 
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       ms-dotnettools.csharp
       ms-dotnettools.csdevkit
       ms-dotnettools.vscode-dotnet-runtime
