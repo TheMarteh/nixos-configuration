@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  # Bluetooth manager + tray applet (gestart in hyprland.conf)
+  # Bluetooth manager + tray applet (gestart in hyprland.lua)
   services.blueman.enable = true;
 
   hardware.bluetooth = {

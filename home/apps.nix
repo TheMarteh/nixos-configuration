@@ -3,7 +3,7 @@
 let
   # RuneLite (via Bolt) is een Java-app onder XWayland. Door `xwayland:force_zero_scaling`
   # tekent die op 1x en is hij te klein op een geschaald scherm. Laat Java zelf schalen,
-  # gelijk aan de monitorschaal in config/hypr/monitors.conf. Alleen voor Bolt, zodat
+  # gelijk aan de monitorschaal in config/hypr/monitors.lua. Alleen voor Bolt, zodat
   # andere Java-apps (Rider, Android Studio) er geen last van hebben.
   runeliteScale = "1.333333";
 
