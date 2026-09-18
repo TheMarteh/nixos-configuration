@@ -12,14 +12,10 @@
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
 
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
-hl.env("GDK_SCALE", "1")
-
--- NVIDIA (https://wiki.hypr.land/Configuring/Advanced-and-Cool/Nvidia/)
-hl.env("LIBVA_DRIVER_NAME", "nvidia")
-hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
-hl.env("NVD_BACKEND", "direct")
+-- Hier staat bewust geen hl.env(). Alles start via `uwsm app --`, dus als
+-- systemd-user-unit, en die erven hun omgeving van de user manager -- niet van
+-- Hyprland. De cursor-, schaal- en NVIDIA-variabelen staan daarom in
+-- home/wayland-env.nix, dat ~/.config/environment.d vult.
 
 hl.config({
     -- Hardware cursors op NVIDIA geven een "ghost" muispointer
