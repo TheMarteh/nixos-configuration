@@ -28,6 +28,11 @@
       gtk-application-prefer-dark-theme = 1;
     };
 
+    # Geen gtk-theme-name voor GTK4: libadwaita negeert die en volgt color-scheme
+    # hierboven. Dit is de 26.05-default van home-manager; expliciet gezet omdat
+    # home.stateVersion nog op 25.05 staat en anders het oude gedrag geldt.
+    gtk4.theme = null;
+
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };
