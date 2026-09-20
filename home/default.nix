@@ -12,6 +12,7 @@
     ./secrets.nix
     ./browsers.nix
     ./apps.nix
+    ./gaming.nix
     ./ai.nix
     ./dev/direnv.nix
     ./dev/neovim.nix
