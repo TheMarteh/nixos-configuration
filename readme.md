@@ -30,6 +30,34 @@ ziet de flake het niet.
 | `nfu` | `flake.lock` updaten                                       |
 | `nix fmt` | alle `.nix`-bestanden formatteren                      |
 
+## Thema's
+
+Het palet staat in `theme/palettes/`; `theme/render.nix` vertaalt er de config
+van elke app uit. Home-manager bouwt ze allemaal naar `~/.config/themes/<naam>/`
+en `theme-set` verzet de symlink `~/.config/current-theme`.
+
+```sh
+theme-set            # rofi-menu met de beschikbare thema's
+theme-set nord       # direct
+theme-set --list
+```
+
+Waybar, rofi, swaync, Hyprland, alacritty, hyprlock, swayosd, btop, bat en
+starship volgen meteen. De virtuele console, tuigreet en GTK/Qt niet: die staan
+vast bij de build en volgen pas na een `nrs`.
+
+## Eigen commando's
+
+| Commando | Wat |
+| -------- | --- |
+| `sysmenu` | het systeemmenu (SUPER+SPACE), ook via de knop links in waybar |
+| `theme-set` | wissel van thema zonder rebuild |
+| `tui-modal <class> <cmd>` | open/sluit een zwevende terminal met een TUI |
+| `screenshot [region\|window\|output]` | schermafbeelding via satty naar klembord en schijf |
+| `screenrecord [--status]` | schermopname starten/stoppen |
+| `clipboard-history` | klembordgeschiedenis via rofi |
+| `screensaver` / `present-mode` | screensaver nu, of het scherm juist aanlaten |
+
 ## Projecten: devShells + direnv
 
 Build-tools en projectspecifieke tools staan niet globaal, maar per project in een
