@@ -8,6 +8,7 @@
     ./users.nix
     ./hyprland.nix
     ./console.nix
+    ./greetd.nix
     ./keyring.nix
     ./nvidia.nix
     ./gaming.nix
