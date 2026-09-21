@@ -38,8 +38,6 @@ in
     tui-modal
     pkgs.bluetui # bluetooth
     pkgs.wiremix # pipewire-volume en -routing
-    # Voor wifi staat er geen pakket: nmtui komt met networkmanager mee. Niet
-    # impala, wat Omarchy gebruikt -- dat is een TUI voor iwd en praat niet met
-    # NetworkManager ("Can not access the iwd service").
+    # Wifi zit hier niet bij: dat is een rofi-menu geworden, zie home/menu.nix.
   ];
 }
