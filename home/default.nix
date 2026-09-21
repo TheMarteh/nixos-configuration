@@ -9,6 +9,7 @@
     ./git.nix
     ./terminal.nix
     ./desktop.nix
+    ./waybar.nix
     ./secrets.nix
     ./browsers.nix
     ./apps.nix
