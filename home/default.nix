@@ -3,6 +3,7 @@
 {
   imports = [
     ./dotfiles.nix
+    ./theme.nix
     ./theming.nix
     ./wayland-env.nix
     ./shell.nix

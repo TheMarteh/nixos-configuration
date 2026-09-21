@@ -4,8 +4,10 @@
 
 -- https://wiki.hypr.land/Configuring/Basics/Variables/
 
--- Kleuren komen uit theme.lua, gegenereerd uit theme/default.nix
-local theme = require("theme")
+-- Kleuren komen uit het actieve palet. Geen require(): dat zoekt alleen in
+-- package.path (de configmap), en het palet staat in ~/.config/current-theme,
+-- een symlink die `theme-set` verzet. Zie home/theme.nix.
+local theme = dofile(os.getenv("HOME") .. "/.config/current-theme/hypr.lua")
 
 hl.config({
     general = {

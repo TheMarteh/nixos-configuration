@@ -1,5 +1,6 @@
-/* Kleuren en font komen uit theme.css, gegenereerd uit theme/default.nix */
-@import url("theme.css");
+/* Kleuren en font komen uit het actieve palet; ~/.config/current-theme is
+   een symlink die `theme-set` verzet. Zie home/theme.nix. */
+@import url("../current-theme/swaync.css");
 
 /* ---------- GLOBAL ---------- */
 * {

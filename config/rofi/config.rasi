@@ -1,9 +1,9 @@
-// Lay-out van de launcher. Kleuren en font komen uit theme.rasi, dat uit
-// theme/default.nix gegenereerd wordt.
+// Lay-out van de launcher. Kleuren en font komen uit het actieve palet;
+// ~/.config/current-theme is een symlink die `theme-set` verzet.
 //
 // Dit bestand is een out-of-store symlink: aanpassen werkt direct, zonder
 // rebuild. Gewoon rofi opnieuw openen.
-@import "theme.rasi"
+@import "../current-theme/rofi.rasi"
 
 configuration {
     modi:                "drun,run";

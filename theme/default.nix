@@ -6,40 +6,39 @@
 #
 # Kleuren staan zonder '#' opgeslagen, omdat elke consumer een andere notatie
 # wil: CSS wil #rrggbb, Hyprland wil rgba(rrggbbaa). Gebruik de helpers onderaan.
+#
+# De theming valt in twee lagen uiteen:
+#
+#   Laag A -- te wisselen zonder rebuild. home/theme.nix bouwt élk palet uit
+#     `palettes` via theme/render.nix naar ~/.config/themes/<naam>/, en
+#     `theme-set` verzet de symlink ~/.config/current-theme. waybar, rofi,
+#     swaync, Hyprland en alacritty importeren uit die symlink.
+#
+#   Laag B -- vastgezet bij de build. De virtuele console (het palet wordt uit
+#     de initrd gezet) en tuigreet (draait als user `greeter` en kan ~/.config
+#     van steal niet lezen). Die gebruiken `default` hieronder, dus na een
+#     themawissel volgt het inlogscherm pas na de eerstvolgende `nrs`.
 rec {
-  name = "catppuccin-mocha";
-
-  colors = {
-    base = "1e1e2e";
-    mantle = "181825";
-    crust = "11111b";
-
-    surface0 = "313244";
-    surface1 = "45475a";
-    surface2 = "585b70";
-
-    overlay0 = "6c7086";
-    overlay1 = "7f849c";
-
-    text = "cdd6f4";
-    subtext0 = "a6adc8";
-    subtext1 = "bac2de";
-
-    blue = "89b4fa";
-    sky = "89dceb";
-    teal = "94e2d5";
-    green = "a6e3a1";
-    mauve = "cba6f7";
-    lavender = "b4befe";
-    pink = "f5c2e7";
-    red = "f38ba8";
-    peach = "fab387";
-    yellow = "f9e2af";
+  palettes = {
+    catppuccin-mocha = import ./palettes/catppuccin-mocha.nix;
+    tokyo-night = import ./palettes/tokyo-night.nix;
+    gruvbox-dark = import ./palettes/gruvbox-dark.nix;
+    nord = import ./palettes/nord.nix;
   };
 
-  # Het accentverloop: dezelfde cyaan -> groen als de Hyprland-vensterranden.
-  accent = colors.sky;
-  accentAlt = colors.teal;
+  # Het palet van laag B, en tegelijk waar een verse installatie mee begint.
+  default = palettes.catppuccin-mocha;
+
+  # Laag B leest deze rechtstreeks (modules/nixos/console.nix en greetd.nix
+  # deden dat al voordat er meerdere palettes waren; dat blijft zo werken).
+  inherit (default)
+    name
+    variant
+    colors
+    accent
+    accentAlt
+    ansi
+    ;
 
   font = {
     mono = "CommitMono Nerd Font";
@@ -48,29 +47,6 @@ rec {
   };
 
   radius = 12;
-
-  # De 16 kleuren van de virtuele console, in volgorde 0..15. Twee bewuste
-  # afwijkingen van Catppuccin's eigen terminal-mapping: kleur 0 is op de Linux
-  # console ook de achtergrond, dus daar hoort base en niet surface1; en kleur 15
-  # is text, anders is "bright white" donkerder dan gewoon wit.
-  ansi = with colors; [
-    base # 0  zwart / achtergrond
-    red # 1
-    green # 2
-    yellow # 3
-    blue # 4
-    mauve # 5  magenta
-    teal # 6  cyaan
-    subtext1 # 7  wit
-    surface1 # 8  fel zwart
-    red # 9
-    green # 10
-    yellow # 11
-    sky # 12 fel blauw
-    pink # 13 fel magenta
-    teal # 14 fel cyaan
-    text # 15 fel wit
-  ];
 
   # #rrggbb, voor CSS en GTK. Alpha doe je in GTK4-CSS met alpha(kleur, 0.5).
   hex = c: "#${c}";
