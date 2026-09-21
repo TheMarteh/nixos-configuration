@@ -5,6 +5,8 @@
     "spacing": 2,
     "height": 30,
     "modules-left": [
+        "custom/menu",
+        "custom/sep",
         "hyprland/workspaces",
         "custom/sep",
         "hyprland/window",
@@ -166,6 +168,11 @@
             "dnd-inhibited-none": "󰪑"
         },
         "on-click": "swaync-client -t",
+        "tooltip": false
+    },
+    "custom/menu": {
+        "format": "\uf313",
+        "on-click": "sysmenu",
         "tooltip": false
     },
     "custom/record": {

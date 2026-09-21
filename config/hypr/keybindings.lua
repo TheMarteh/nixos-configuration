@@ -13,6 +13,7 @@ local menu        = 'rofi -show drun -run-command "uwsm app -- {cmd}"'
 local runMenu     = 'rofi -show run -run-command "uwsm app -- {cmd}"'
 
 -- Applicaties
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("sysmenu"))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(runMenu))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("uwsm app -- firefox"))

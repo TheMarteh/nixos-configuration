@@ -13,6 +13,7 @@
     ./tui-modals.nix
     ./idle.nix
     ./capture.nix
+    ./menu.nix
     ./waybar.nix
     ./swaync.nix
     ./hypr.nix
