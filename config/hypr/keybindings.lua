@@ -80,9 +80,17 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
--- Screenshots met grim en slurp
-hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png'))
-hl.bind("PRINT",         hl.dsp.exec_cmd("grim ~/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png"))
+-- Vastleggen. Alles gaat via satty (annoteren) naar het klembord en naar
+-- ~/Pictures/Screenshots; zie home/capture.nix.
+hl.bind("PRINT",         hl.dsp.exec_cmd("screenshot region"))
+hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("screenshot window"))
+hl.bind("CTRL + PRINT",  hl.dsp.exec_cmd("screenshot output"))
+hl.bind(mainMod .. " + PRINT",     hl.dsp.exec_cmd("screenrecord"))
+hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("hyprpicker -a"))
+
+-- Klembordgeschiedenis en emoji's
+hl.bind(mainMod .. " + CTRL + V",     hl.dsp.exec_cmd("clipboard-history"))
+hl.bind(mainMod .. " + CTRL + SPACE", hl.dsp.exec_cmd("rofimoji --selector rofi --clipboarder wl-copy"))
 
 -- Notificaties
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))

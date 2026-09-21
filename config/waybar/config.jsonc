@@ -14,6 +14,7 @@
         "clock"
     ],
     "modules-right": [
+        "custom/record",
         "pulseaudio",
         "custom/sep",
         "bluetooth",
@@ -165,6 +166,13 @@
             "dnd-inhibited-none": "󰪑"
         },
         "on-click": "swaync-client -t",
+        "tooltip": false
+    },
+    "custom/record": {
+        "exec": "screenrecord --status",
+        "interval": 2,
+        "format": "{}",
+        "on-click": "screenrecord",
         "tooltip": false
     },
     "custom/sep": {

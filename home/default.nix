@@ -12,6 +12,7 @@
     ./desktop.nix
     ./tui-modals.nix
     ./idle.nix
+    ./capture.nix
     ./waybar.nix
     ./swaync.nix
     ./hypr.nix

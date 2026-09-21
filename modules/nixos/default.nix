@@ -18,6 +18,7 @@
     ./virtualisation.nix
     ./fonts.nix
     ./ai.nix
+    ./capture.nix
     ./packages.nix
   ];
 }
