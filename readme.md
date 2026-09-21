@@ -25,7 +25,8 @@ ziet de flake het niet.
 | Alias | Wat                                                        |
 | ----- | ---------------------------------------------------------- |
 | `nrs` | rebuild + switch (via `nh`, toont eerst een pakketten-diff) |
-| `nrsu` | `nfu` + `nrs` in één keer                                  |
+| `nrb` | rebuild naar de volgende boot (zie home/shell.nix)         |
+| `nrbu` | `nfu` + `nrb` in één keer                                 |
 | `nfu` | `flake.lock` updaten                                       |
 | `nix fmt` | alle `.nix`-bestanden formatteren                      |
 

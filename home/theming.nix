@@ -1,16 +1,26 @@
 { pkgs, ... }:
 
+let
+  theme = import ../theme;
+
+  # GTK en Qt volgen het palet niet in kleur -- daarvoor zou een complete
+  # stylesheet gegenereerd moeten worden -- maar wel in licht/donker. Alle
+  # palettes in theme/palettes/ zijn nu donker; dit is de haak voor als daar een
+  # licht palet bij komt. Let op: dit is laag B, dus pas actief na een rebuild.
+  dark = theme.variant != "light";
+in
 {
-  # Dark mode voorkeur voor GTK4/libadwaita apps en portals.
+  # Voorkeur voor GTK4/libadwaita apps en portals.
   # (Geen GTK_THEME env var: die breekt de styling van libadwaita apps.)
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  dconf.settings."org/gnome/desktop/interface".color-scheme =
+    if dark then "prefer-dark" else "prefer-light";
 
   # GTK Theme (voor Firefox, GNOME apps, etc.)
   gtk = {
     enable = true;
 
     theme = {
-      name = "Adwaita-dark";
+      name = if dark then "Adwaita-dark" else "Adwaita";
       package = pkgs.gnome-themes-extra;
     };
 
@@ -25,7 +35,7 @@
     };
 
     gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
+      gtk-application-prefer-dark-theme = if dark then 1 else 0;
     };
 
     # Geen gtk-theme-name voor GTK4: libadwaita negeert die en volgt color-scheme
@@ -34,7 +44,7 @@
     gtk4.theme = null;
 
     gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
+      gtk-application-prefer-dark-theme = if dark then 1 else 0;
     };
   };
 
@@ -43,7 +53,7 @@
     enable = true;
     platformTheme.name = "adwaita";
     style = {
-      name = "adwaita-dark";
+      name = if dark then "adwaita-dark" else "adwaita";
       package = [
         pkgs.adwaita-qt
         pkgs.adwaita-qt6

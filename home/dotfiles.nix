@@ -10,9 +10,10 @@ in
 
 {
   # Mapping van dotfiles in ./config naar $HOME/.config.
-  # waybar, swaync en hypr staan niet in deze lijst: die hebben een
-  # gegenereerd theme-bestand ernaast staan en worden per bestand gelinkt in
-  # hun eigen module. Een map als geheel symlinken kan dat niet.
+  # waybar, swaync, rofi en hypr staan niet in deze lijst: die worden per
+  # bestand gelinkt in hun eigen module, omdat daar ook pakketten en een
+  # bestandslijst bij horen. Hun kleuren komen uit ~/.config/current-theme
+  # (zie home/theme.nix), niet uit een buurbestand.
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
     recursive = true;

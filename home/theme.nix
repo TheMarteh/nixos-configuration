@@ -18,17 +18,30 @@ let
   theme = import ../theme;
   render = import ../theme/render.nix { inherit (theme) font hex rgba; };
 
+  rendered = lib.mapAttrs (_: palette: render palette) theme.palettes;
+
+  # btop zoekt themabestanden alleen op naam, in ~/.config/btop/themes/ of naast
+  # zijn eigen binary -- een vrij pad in color_theme werkt niet. Dit bestand
+  # gaat daarom niet mee in de palet-map maar naar btop's eigen themamap.
+  btopThemes = lib.mapAttrs' (
+    themeName: files: lib.nameValuePair "btop/themes/${themeName}.theme" { text = files."btop.theme"; }
+  ) rendered;
+
   # { "themes/nord/waybar.css" = { text = "..."; }; ... } voor alle palettes.
   themeFiles = lib.concatMapAttrs (
-    themeName: palette:
+    themeName: files:
     lib.mapAttrs' (
       fileName: text: lib.nameValuePair "themes/${themeName}/${fileName}" { inherit text; }
-    ) (render palette)
-  ) theme.palettes;
+    ) (removeAttrs files [ "btop.theme" ])
+  ) rendered;
 
   theme-set = pkgs.writeShellApplication {
     name = "theme-set";
-    runtimeInputs = [ pkgs.coreutils ];
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.gnused
+      pkgs.gnugrep
+    ];
     text = ''
       default_theme=${theme.default.name}
 
@@ -102,6 +115,30 @@ let
           fi
       }
 
+      # Twee consumers kunnen niet uit ~/.config/current-theme lezen en krijgen
+      # daarom een eigen, schrijfbare kopie.
+      seed_mutable_copies() {
+          # alacritty kijkt met inotify naar het gecanonicaliseerde pad van zijn
+          # imports, dus een verzette symlink ziet hij niet. Een echte kopie wel:
+          # daarmee herkleuren ook de al geopende terminals.
+          install -Dm644 "$1/alacritty.toml" "$HOME/.config/alacritty/theme.toml"
+
+          # btop schrijft zijn config terug bij afsluiten, dus dat bestand kan
+          # geen read-only symlink naar de store zijn. Hier past alleen de
+          # thémanaam: het bijbehorende .theme-bestand staat in
+          # ~/.config/btop/themes/, waar btop zelf zoekt.
+          local btop_conf="$HOME/.config/btop/btop.conf"
+          local want="color_theme = \"$2\""
+          if ! grep -qsxF "$want" "$btop_conf"; then
+              mkdir -p "$(dirname "$btop_conf")"
+              if grep -qs '^color_theme' "$btop_conf"; then
+                  sed -i "s|^color_theme.*|$want|" "$btop_conf"
+              else
+                  printf '%s\n' "$want" >>"$btop_conf"
+              fi
+          fi
+      }
+
       apply() {
           local name="$1" dir
           dir="$themes_dir/$name"
@@ -123,6 +160,7 @@ let
           mkdir -p "$(dirname "$state_file")"
           printf '%s\n' "$name" >"$state_file"
 
+          seed_mutable_copies "$dir" "$name"
           reload "$name"
       }
 
@@ -160,7 +198,7 @@ let
   };
 in
 {
-  xdg.configFile = themeFiles;
+  xdg.configFile = themeFiles // btopThemes;
 
   home.packages = [ theme-set ];
 

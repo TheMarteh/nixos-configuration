@@ -11,6 +11,11 @@ let
   #   home.sessionVariables -> hm-session-vars.sh, gesourcet door de login shell.
   #     Dekt apps die je vanuit een terminal start.
   sessionVariables = {
+    # Waar waybar en de menu-scripts een terminal vandaan halen. Staat bewust
+    # hier en niet alleen in de shell: waybar draait als systemd-user-unit en
+    # leest zijn on-click-commando's met deze omgeving.
+    TERMINAL = "alacritty";
+
     # Java/AWT apps onder XWayland (bijv. RuneLite via Bolt): voorkomt blanco/
     # grijze vensters en resize-glitches op tiling WM's.
     _JAVA_AWT_WM_NONREPARENTING = "1";
