@@ -4,6 +4,9 @@
 
 -- https://wiki.hypr.land/Configuring/Basics/Variables/
 
+-- Kleuren komen uit theme.lua, gegenereerd uit theme/default.nix
+local theme = require("theme")
+
 hl.config({
     general = {
         gaps_in  = 4,
@@ -12,8 +15,8 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border   = { colors = theme.active_border, angle = theme.border_angle },
+            inactive_border = theme.inactive_border,
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -37,8 +40,8 @@ hl.config({
             enabled      = true,
             range        = 4,
             render_power = 3,
-            -- Was rgba(1a1a1aee); in Lua is dit een ARGB-integer.
-            color        = 0xee1a1a1a,
+            -- In Lua is dit een ARGB-integer, geen rgba()-string.
+            color        = theme.shadow,
         },
 
         blur = {

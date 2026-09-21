@@ -5,15 +5,14 @@ let
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
     nvim = "nvim";
-    hypr = "hypr";
-    swaync = "swaync";
   };
 in
 
 {
   # Mapping van dotfiles in ./config naar $HOME/.config.
-  # waybar staat niet in deze lijst: die heeft een gegenereerde theme.css
-  # ernaast en wordt per bestand gelinkt in waybar.nix.
+  # waybar, swaync en hypr staan niet in deze lijst: die hebben een
+  # gegenereerd theme-bestand ernaast staan en worden per bestand gelinkt in
+  # hun eigen module. Een map als geheel symlinken kan dat niet.
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
     recursive = true;

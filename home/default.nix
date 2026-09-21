@@ -10,6 +10,8 @@
     ./terminal.nix
     ./desktop.nix
     ./waybar.nix
+    ./swaync.nix
+    ./hypr.nix
     ./secrets.nix
     ./browsers.nix
     ./apps.nix
