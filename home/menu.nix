@@ -66,7 +66,7 @@ let
               "  Monitoren uit" \
               "  Config bewerken" \
               "  Terug")" in
-          *Wifi) tui-modal Wifi impala ;;
+          *Wifi) tui-modal Wifi nmtui connect ;;
           *Bluetooth) tui-modal Bluetooth bluetui ;;
           *Geluid) tui-modal Wiremix wiremix ;;
           *"Monitoren uit") "$HOME/.config/hypr/scripts/dpms-toggle.sh" ;;

@@ -77,7 +77,7 @@
         "tooltip-format-disconnected": "Disconnected",
         "interval": 3,
         "spacing": 1,
-        "on-click": "tui-modal Wifi impala",
+        "on-click": "tui-modal Wifi nmtui connect",
         "on-click-right": "uwsm app -- nm-connection-editor"
     },
     "cpu": {
