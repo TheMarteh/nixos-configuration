@@ -283,6 +283,66 @@ in
     return { colorscheme = "${palette.nvimColorscheme}" }
   '';
 
+  # ---- swayosd ------------------------------------------------------------
+  # GTK-CSS. config/swayosd/style.css importeert dit; de lay-out staat daar,
+  # de kleuren hier. swayosd laadt ~/.config/swayosd/style.css in plaats van
+  # zijn eigen /etc/xdg-versie, dus het hele blok moet compleet zijn.
+  "swayosd.css" = ''
+    /* ${header} */
+
+    @define-color bg ${hex c.base};
+    @define-color fg ${hex c.text};
+    @define-color muted ${hex c.overlay1};
+    @define-color accent ${hex accent};
+
+    * {
+      font-family: "${font.mono}", monospace;
+    }
+  '';
+
+  # ---- starship -----------------------------------------------------------
+  # home/shell.nix wijst STARSHIP_CONFIG hierheen, zodat een themawissel
+  # meteen in de volgende prompt zit.
+  "starship.toml" = ''
+    # ${header}
+
+    add_newline = false
+    format = "$directory$git_branch$git_status$nix_shell$character"
+    palette = "theme"
+
+    [palettes.theme]
+    accent = "${hex accent}"
+    accent_alt = "${hex accentAlt}"
+    text = "${hex c.text}"
+    muted = "${hex c.overlay1}"
+    green = "${hex c.green}"
+    red = "${hex c.red}"
+    peach = "${hex c.peach}"
+    mauve = "${hex c.mauve}"
+    blue = "${hex c.blue}"
+
+    [directory]
+    style = "bold accent"
+    truncation_length = 3
+    truncate_to_repo = false
+
+    [git_branch]
+    style = "mauve"
+    format = "[$symbol$branch]($style) "
+
+    [git_status]
+    style = "peach"
+
+    [nix_shell]
+    style = "blue"
+    symbol = " "
+    format = "[$symbol$state]($style) "
+
+    [character]
+    success_symbol = "[>](green)"
+    error_symbol = "[>](red)"
+  '';
+
   # ---- metadata -----------------------------------------------------------
   # Wordt door `theme-set` gesourcet, zodat dat script niets over de palettes
   # hoeft te weten behalve de mapnaam.

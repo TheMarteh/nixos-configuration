@@ -103,6 +103,7 @@ let
           # proces .waybar-wrapped, dus `pkill -x waybar` raakt niets.
           pkill -USR2 -f '/bin/waybar$' >/dev/null 2>&1 || true
           swaync-client --reload-css >/dev/null 2>&1 || true
+          systemctl --user try-restart swayosd.service >/dev/null 2>&1 || true
 
           if [ -n "''${theme_wallpaper:-}" ]; then
               awww img "$HOME/.config/hypr/wallpapers/$theme_wallpaper" \

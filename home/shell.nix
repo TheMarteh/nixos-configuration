@@ -1,6 +1,40 @@
-{ ... }:
+{ config, ... }:
 
 {
+  # fzf: Ctrl-R door de geschiedenis, Ctrl-T door bestanden.
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  # `z <deel van een pad>` springt naar mappen waar je vaak bent.
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  programs.eza = {
+    enable = true;
+    enableBashIntegration = true; # zet ls/ll/la om
+    icons = "auto";
+    git = true;
+  };
+
+  # Geschiedenis in SQLite in plaats van .bash_history: doorzoekbaar en per map.
+  programs.atuin = {
+    enable = true;
+    enableBashIntegration = true;
+    flags = [ "--disable-up-arrow" ]; # pijl omhoog blijft gewoon de vorige regel
+  };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    # Bewust geen `settings`: dan schrijft home-manager hier geen bestand en
+    # blijft dit pad de symlink naar het actieve palet. Zie theme/render.nix.
+    configPath = "${config.home.homeDirectory}/.config/current-theme/starship.toml";
+  };
+
   programs.bash = {
     enable = true;
     shellAliases = {
