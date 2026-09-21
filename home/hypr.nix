@@ -13,6 +13,7 @@ let
     "looknfeel"
     "input"
     "keybindings"
+    "windowrules"
   ];
 in
 {

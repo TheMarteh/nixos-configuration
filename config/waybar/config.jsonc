@@ -74,15 +74,17 @@
         "tooltip-format-disconnected": "Disconnected",
         "interval": 3,
         "spacing": 1,
-        "on-click": "uwsm app -- nm-connection-editor"
+        "on-click": "tui-modal Wifi impala",
+        "on-click-right": "uwsm app -- nm-connection-editor"
     },
     "cpu": {
         "interval": 5,
         "format": "󰍛",
-        "on-click": "$TERMINAL -e btop"
+        "on-click": "tui-modal Btop btop"
     },
     "memory": {
         "format": "Mem: {used}/{total}GiB",
+        "on-click": "tui-modal Btop btop"
     },
     "battery": {
         "format": "{capacity}% {icon}",
@@ -130,11 +132,12 @@
         "format-disabled": "󰂲",
         "format-connected": "",
         "tooltip-format": "Devices connected: {num_connections}",
-        "on-click": "blueman-manager"
+        "on-click": "tui-modal Bluetooth bluetui",
+        "on-click-right": "blueman-manager"
     },
     "pulseaudio": {
         "format": "{icon}",
-        "on-click": "$TERMINAL --class=Wiremix -e wiremix",
+        "on-click": "tui-modal Wiremix wiremix",
         "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "tooltip-format": "Playing at {volume}%",
         "scroll-step": 5,

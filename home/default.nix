@@ -10,6 +10,7 @@
     ./git.nix
     ./terminal.nix
     ./desktop.nix
+    ./tui-modals.nix
     ./waybar.nix
     ./swaync.nix
     ./hypr.nix

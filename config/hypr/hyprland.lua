@@ -38,6 +38,7 @@ require("monitors")
 require("looknfeel")
 require("input")
 require("keybindings")
+require("windowrules")
 
 
 -------------------
@@ -56,48 +57,3 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("uwsm app -- blueman-applet")
     hl.exec_cmd("uwsm app -- nm-applet --indicator")
 end)
-
-
---------------------------------
----- WINDOWS AND WORKSPACES ----
---------------------------------
-
--- https://wiki.hypr.land/Configuring/Basics/Window-Rules/
-
--- Negeer maximize-verzoeken van apps.
-hl.window_rule({
-    name = "suppress-maximize-events",
-    match = { class = ".*" },
-
-    suppress_event = "maximize",
-})
-
--- Lost sleepproblemen met XWayland op.
-hl.window_rule({
-    name = "fix-xwayland-drags",
-    match = {
-        class      = "^$",
-        title      = "^$",
-        xwayland   = true,
-        float      = true,
-        fullscreen = false,
-        pin        = false,
-    },
-
-    no_focus = true,
-})
-
--- Lost tooltip/hover-geflikker in RuneLite (Bolt) op: de Swing-popups zijn
--- floating XWayland-vensters (class net-runelite-client-RuneLite, titel winNNN).
--- Met follow_mouse = 1 stelen ze focus bij hover, waardoor het hoofdvenster de
--- tooltip verbergt in een flikkerlus.
-hl.window_rule({
-    name = "runelite-tooltip-flicker",
-    match = {
-        class = "^(net-runelite-client-RuneLite)$",
-        title = "^(win\\d+)$",
-        float = true,
-    },
-
-    no_focus = true,
-})
