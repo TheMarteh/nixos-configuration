@@ -16,7 +16,6 @@
     pkgs-unstable.hyprshutdown
     # nm-applet (tray) + nm-connection-editor voor de waybar-klik
     networkmanagerapplet
-    rofi
     waybar
     brightnessctl
     playerctl

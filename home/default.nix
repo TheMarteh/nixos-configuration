@@ -12,6 +12,7 @@
     ./waybar.nix
     ./swaync.nix
     ./hypr.nix
+    ./rofi.nix
     ./secrets.nix
     ./browsers.nix
     ./apps.nix

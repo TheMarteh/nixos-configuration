@@ -1,0 +1,98 @@
+// Lay-out van de launcher. Kleuren en font komen uit theme.rasi, dat uit
+// theme/default.nix gegenereerd wordt.
+//
+// Dit bestand is een out-of-store symlink: aanpassen werkt direct, zonder
+// rebuild. Gewoon rofi opnieuw openen.
+@import "theme.rasi"
+
+configuration {
+    modi:                "drun,run";
+    show-icons:          true;
+    icon-theme:          "Papirus-Dark";
+    drun-display-format: "{name}";
+    display-drun:        "";
+    display-run:         "";
+    hover-select:        true;
+    me-select-entry:     "";
+    me-accept-entry:     "MousePrimary";
+}
+
+window {
+    width:            700px;
+    location:         center;
+    padding:          0;
+    border:           2px;
+    border-color:     @accent;
+    border-radius:    16px;
+    background-color: @bg-alpha;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    padding:  10px;
+    spacing:  8px;
+    background-color: transparent;
+}
+
+inputbar {
+    children: [ textbox-prompt-colon, entry ];
+    padding:  12px 14px;
+    spacing:  12px;
+    background-color: transparent;
+}
+
+// Het zoekicoon. Niet `prompt`: dat widget toont de modusnaam en negeert str.
+textbox-prompt-colon {
+    expand:           false;
+    str:              "";
+    // De glyph loopt buiten zijn advance width; zonder deze breedte knipt
+    // rofi de steel van het vergrootglas eraf.
+    width:            24px;
+    horizontal-align: 0.5;
+    text-color:       @accent;
+    vertical-align:   0.5;
+    background-color: transparent;
+}
+
+entry {
+    placeholder:       "Zoeken...";
+    placeholder-color: @muted;
+    text-color:        @fg;
+    vertical-align:    0.5;
+    background-color:  transparent;
+}
+
+listview {
+    lines:     8;
+    columns:   1;
+    scrollbar: false;
+    spacing:   2px;
+    background-color: transparent;
+}
+
+element {
+    padding:       10px 14px;
+    spacing:       12px;
+    border-radius: 10px;
+    text-color:    @fg-dim;
+    background-color: transparent;
+}
+
+// De accentbalk: alleen een linkerrand op de geselecteerde regel.
+element selected.normal {
+    background-color: @surface;
+    text-color:       @fg;
+    border:           0 0 0 3px;
+    border-color:     @accent;
+}
+
+element-icon {
+    size:           26px;
+    vertical-align: 0.5;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+}

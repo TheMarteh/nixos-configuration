@@ -75,6 +75,20 @@ hl.config({
 })
 
 
+-----------------
+---- LAYERS  ----
+-----------------
+
+-- Blur achter de rofi-launcher. Rofi 2.0 is een layer-shell-client met
+-- namespace "rofi"; decoration.blur staat hierboven al aan.
+hl.layer_rule({
+    name         = "rofi-blur",
+    match        = { namespace = "^rofi$" },
+    blur         = true,
+    ignore_alpha = 0.2,
+})
+
+
 --------------------
 ---- ANIMATIES  ----
 --------------------
