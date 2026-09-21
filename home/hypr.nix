@@ -25,6 +25,9 @@ in
       }) luaFiles
     )
     // {
+      # hyprlock.conf staat bewust niet in luaFiles: die wordt samen met
+      # hypridle in home/idle.nix gelinkt.
+      #
       # Mappen blijven als geheel gelinkt; daar zit niets gegenereerds in.
       "hypr/scripts".source = link "${hyprConfig}/scripts";
       "hypr/wallpapers".source = link "${hyprConfig}/wallpapers";

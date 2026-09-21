@@ -34,8 +34,11 @@ hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("hyprshutdown -t 'Uitloggen..
 hl.bind(mainMod .. " + CTRL + SHIFT + R", hl.dsp.exec_cmd("hyprshutdown -t 'Herstarten...' -p 'systemctl reboot'"))
 hl.bind(mainMod .. " + CTRL + SHIFT + P", hl.dsp.exec_cmd("hyprshutdown -t 'Afsluiten...' -p 'systemctl poweroff'"))
 
--- Scherm uitzetten
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("~/nixos-configuration/config/hypr/scripts/dpms-toggle.sh"))
+-- Vergrendelen en screensaver. Via loginctl, zodat het langs hypridle's
+-- lock_cmd loopt en de sessie ook echt als vergrendeld geldt (zie home/idle.nix).
+-- Het scherm handmatig uitzetten zit in het systeemmenu.
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"))
+hl.bind(mainMod .. " + ALT + S",   hl.dsp.exec_cmd("screensaver"))
 
 -- Focus verplaatsen met mainMod + pijltjestoetsen
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))

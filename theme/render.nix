@@ -254,6 +254,26 @@ in
     theme[process_end]="${hex c.mauve}"
   '';
 
+  # ---- hyprlock -----------------------------------------------------------
+  # hyprlang-variabelen. config/hypr/hyprlock.conf doet hier bovenaan een
+  # `source =` op; getest: met een pad dat met ~ begint werkt dat.
+  "hyprlock.conf" = ''
+    # ${header}
+
+    $font       = ${font.mono}
+
+    $base       = rgb(${c.base})
+    $mantle     = rgb(${c.mantle})
+    $crust      = rgb(${c.crust})
+    $surface    = rgb(${c.surface0})
+    $overlay    = rgb(${c.overlay1})
+    $text       = rgb(${c.text})
+    $subtext    = rgb(${c.subtext0})
+    $accent     = rgb(${accent})
+    $accent_alt = rgb(${accentAlt})
+    $red        = rgb(${c.red})
+  '';
+
   # ---- neovim -------------------------------------------------------------
   # Alleen de naam: de colorschemes zelf zijn nvim-plugins, niet onze kleuren.
   # config/nvim/lua/plugins/theme.lua leest dit bij het starten.

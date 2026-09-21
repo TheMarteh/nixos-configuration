@@ -11,6 +11,7 @@
     ./terminal.nix
     ./desktop.nix
     ./tui-modals.nix
+    ./idle.nix
     ./waybar.nix
     ./swaync.nix
     ./hypr.nix

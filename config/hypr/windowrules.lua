@@ -61,3 +61,19 @@ hl.window_rule({
     size   = { 1100, 700 },
     center = true,
 })
+
+
+--------------------
+---- SCREENSAVER ----
+--------------------
+
+-- De terminal die `screensaver` opent: schermvullend en zonder rand, zodat er
+-- niets van de desktop doorheen prikt. Zie home/idle.nix.
+hl.window_rule({
+    name = "screensaver",
+    match = { class = "^(Screensaver)$" },
+
+    fullscreen  = true,
+    border_size = 0,
+    rounding    = 0,
+})

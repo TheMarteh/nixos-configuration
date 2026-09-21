@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Check of displays momenteel aan staan:
-if hyprctl monitors | grep -q "dpmsStatus: 1"; then
-    hyprctl dispatch dpms off
-else
-    hyprctl dispatch dpms on
-fi
+# Zet de schermen uit of weer aan. Een druk op een toets of een muisbeweging
+# haalt ze ook terug (misc.key_press_enables_dpms / mouse_move_enables_dpms).
+#
+# Sinds Hyprland 0.55 leest `hyprctl dispatch` zijn argument als Lua; de oude
+# vorm `hyprctl dispatch dpms toggle` geeft een parsefout en doet niets.
+hyprctl dispatch 'hl.dsp.dpms("toggle")'
