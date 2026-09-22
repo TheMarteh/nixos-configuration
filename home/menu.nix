@@ -25,9 +25,17 @@ let
           notify-send -a wifi-menu "$@" >/dev/null 2>&1 || true
       }
 
+      # Geen "$@": pick wordt nooit met argumenten aangeroepen, en dat levert
+      # SC2120 op. Hier is zo'n waarschuwing meteen fataal: bij een melding
+      # wordt de broncoderegel mee geecht, en de Nerd Font-glyphs hieronder
+      # vallen buiten de locale van de build-sandbox. De checker crasht dan met
+      # "commitBuffer: invalid argument" en de hele build faalt.
+      #
+      # Let op: laat een commentaarregel hier nooit met het woord uit SC1073
+      # beginnen -- dat wordt als directive gelezen en faalt ook.
       pick() {
           rofi -dmenu -i -p "Wifi" -format i \
-              -theme-str 'window { width: 520px; } listview { lines: 8; }' "$@"
+              -theme-str 'window { width: 520px; } listview { lines: 8; }'
       }
 
       if [ "$(nmcli radio wifi)" != "enabled" ]; then
