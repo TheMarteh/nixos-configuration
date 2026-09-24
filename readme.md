@@ -51,6 +51,7 @@ vast bij de build en volgen pas na een `nrs`.
 | Commando | Wat |
 | -------- | --- |
 | `sysmenu` | het systeemmenu (SUPER+SPACE), ook via de knop links in waybar |
+| `power-menu` | vergrendelen/slaapstand/uitloggen/herstarten/afsluiten (SUPER+CTRL+SHIFT+P), ook onder Systeem in het menu |
 | `theme-set` | wissel van thema zonder rebuild |
 | `tui-modal <class> <cmd>` | open/sluit een zwevende terminal met een TUI |
 | `screenshot [region\|window\|output]` | schermafbeelding via satty naar klembord en schijf |

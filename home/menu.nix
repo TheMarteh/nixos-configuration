@@ -133,6 +133,43 @@ let
     '';
   };
 
+  # Aan/uit-menu: op SUPER+CTRL+SHIFT+P en, via --terug, onder Systeem in het
+  # menu hieronder. Eén keuzelijst in plaats van een sneltoets per actie: kiezen
+  # is meteen bevestigen, en een misgrepen toets kost geen sessie meer.
+  # Vergrendelen staat bovenaan, zodat een reflexmatige Enter het onschuldigste
+  # doet; het heeft daarnaast nog een eigen toets (SUPER+SHIFT+L).
+  power-menu = pkgs.writeShellApplication {
+    name = "power-menu";
+    text = ''
+      entries=(
+          "  Vergrendelen"
+          "  Slaapstand"
+          "  Uitloggen"
+          "  Herstarten"
+          "  Afsluiten"
+      )
+
+      # Vanuit het systeemmenu hoort er een Terug-regel bij, net als in de
+      # andere submenu's; als sneltoets is er niets om naar terug te gaan.
+      [ "''${1:-}" = "--terug" ] && entries+=("  Terug")
+
+      case "$(printf '%s\n' "''${entries[@]}" \
+          | rofi -dmenu -i -p "Aan/uit" \
+              -theme-str "window { width: 420px; } listview { lines: ''${#entries[@]}; }")" in
+      # Vergrendelen via loginctl, zodat het langs hypridle's lock_cmd loopt en
+      # de sessie ook echt als vergrendeld geldt (zie home/idle.nix). Dat regelt
+      # met before_sleep_cmd ook het vergrendelen rond de slaapstand. De rest
+      # gaat via hyprshutdown, zodat apps eerst netjes afsluiten.
+      *Vergrendelen) loginctl lock-session ;;
+      *Slaapstand) systemctl suspend ;;
+      *Uitloggen) hyprshutdown -t 'Uitloggen...' ;;
+      *Herstarten) hyprshutdown -t 'Herstarten...' -p 'systemctl reboot' ;;
+      *Afsluiten) hyprshutdown -t 'Afsluiten...' -p 'systemctl poweroff' ;;
+      *Terug) exec sysmenu ;;
+      esac
+    '';
+  };
+
   sysmenu = pkgs.writeShellApplication {
     name = "sysmenu";
     runtimeInputs = [ pkgs.findutils ];
@@ -202,21 +239,18 @@ let
           esac
       }
 
+      # Vergrendelen, slaapstand, uitloggen, herstarten en afsluiten staan niet
+      # hier maar in power-menu, zodat de sneltoets en dit menu dezelfde lijst
+      # gebruiken.
       system_menu() {
           case "$(rofi_menu "Systeem" \
-              "  Vergrendelen" \
+              "  Aan/uit" \
               "  Screensaver" \
               "  Presenteermodus" \
-              "  Uitloggen" \
-              "  Herstarten" \
-              "  Afsluiten" \
               "  Terug")" in
-          *Vergrendelen) loginctl lock-session ;;
+          *"Aan/uit") power-menu --terug ;;
           *Screensaver) screensaver ;;
           *Presenteermodus) present-mode ;;
-          *Uitloggen) hyprshutdown -t 'Uitloggen...' ;;
-          *Herstarten) hyprshutdown -t 'Herstarten...' -p 'systemctl reboot' ;;
-          *Afsluiten) hyprshutdown -t 'Afsluiten...' -p 'systemctl poweroff' ;;
           *Terug) main_menu ;;
           esac
       }
@@ -262,6 +296,7 @@ let
 in
 {
   home.packages = [
+    power-menu
     sysmenu
     wifi-menu
   ];

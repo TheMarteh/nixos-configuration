@@ -30,10 +30,11 @@ hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())          -- dwindle
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle
 
--- Uitloggen/herstarten/afsluiten via hyprshutdown: sluit eerst alle apps netjes af
-hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("hyprshutdown -t 'Uitloggen...'"))
-hl.bind(mainMod .. " + CTRL + SHIFT + R", hl.dsp.exec_cmd("hyprshutdown -t 'Herstarten...' -p 'systemctl reboot'"))
-hl.bind(mainMod .. " + CTRL + SHIFT + P", hl.dsp.exec_cmd("hyprshutdown -t 'Afsluiten...' -p 'systemctl poweroff'"))
+-- Vergrendelen, slaapstand, uitloggen, herstarten en afsluiten zitten samen in
+-- één rofi-menu (power-menu, zie home/menu.nix), dat ook onder SUPER+SPACE >
+-- Systeem > Aan/uit hangt. Geen aparte toets per actie meer: kiezen is meteen
+-- bevestigen, en een misgrepen toets kost geen sessie.
+hl.bind(mainMod .. " + CTRL + SHIFT + P", hl.dsp.exec_cmd("power-menu"))
 
 -- Vergrendelen en screensaver. Via loginctl, zodat het langs hypridle's
 -- lock_cmd loopt en de sessie ook echt als vergrendeld geldt (zie home/idle.nix).
