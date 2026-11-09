@@ -10,8 +10,9 @@ rec {
   modelDir = "/srv/models";
 
   # API-sleutel (alleen de sleutel, eigenaar steal, 0600). Wordt bij de eerste
-  # start aangemaakt door llama-swap-api-key.service; nieuwe sleutel: bestand
-  # verwijderen en `systemctl restart llama-swap`.
+  # start aangemaakt door llama-swap-api-key.service. Nieuwe sleutel: bestand
+  # verwijderen en `systemctl restart llama-swap-api-key llama-swap` (die
+  # oneshot blijft actief, dus alleen llama-swap herstarten is niet genoeg).
   apiKeyFile = "/etc/llama-swap/api-key";
 
   # Standaardmodel voor agents (OpenCode, claude-local)
