@@ -34,7 +34,8 @@ rec {
       name = "Qwen3.6 35B-A3B";
       repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
       file = "qwen36/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf"; # 22,4 GB
-      ctx = 65536;
+      # OpenCode's systeemprompt alleen is al ~14K tokens
+      ctx = 131072;
       output = 16384;
       ttl = 900; # na 15 min zonder verzoeken uit het geheugen
       flags = [
