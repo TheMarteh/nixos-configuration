@@ -116,13 +116,19 @@ let
           fi
       }
 
-      # Twee consumers kunnen niet uit ~/.config/current-theme lezen en krijgen
+      # Drie consumers kunnen niet uit ~/.config/current-theme lezen en krijgen
       # daarom een eigen, schrijfbare kopie.
       seed_mutable_copies() {
           # alacritty kijkt met inotify naar het gecanonicaliseerde pad van zijn
           # imports, dus een verzette symlink ziet hij niet. Een echte kopie wel:
           # daarmee herkleuren ook de al geopende terminals.
           install -Dm644 "$1/alacritty.toml" "$HOME/.config/alacritty/theme.toml"
+
+          # Het inlogscherm draait als user `greeter` en kan hier niet lezen.
+          # modules/nixos/console.nix maakt /run/theme op naam van steal, juist
+          # zodat deze regel mag. Faalt stil bij een oudere generatie zonder die
+          # map -- dan volgt de greeter pas na de eerstvolgende boot.
+          cp "$1/console.seq" /run/theme/console.seq 2>/dev/null || true
 
           # btop schrijft zijn config terug bij afsluiten, dus dat bestand kan
           # geen read-only symlink naar de store zijn. Hier past alleen de

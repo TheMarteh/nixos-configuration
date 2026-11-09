@@ -37,6 +37,17 @@
 
   programs.bash = {
     enable = true;
+
+    # Een VT houdt het palet dat hij bij de boot kreeg; wissel je daarna van
+    # thema, dan klopt dat niet meer. De TTY's zijn van root, dus theme-set kan
+    # er zelf niet bij -- bij het inloggen wel, want dan is de VT van jou.
+    # Alleen op een echte console: in alacritty zou dit de terminal herkleuren.
+    initExtra = ''
+      if [ "$TERM" = linux ] && [ -r "$HOME/.config/current-theme/console.seq" ]; then
+          cat "$HOME/.config/current-theme/console.seq"
+      fi
+    '';
+
     shellAliases = {
       btw = "echo I use NixOS, btw";
       # Dagelijks werk: pakket toevoegen, optie wijzigen, config aanpassen.

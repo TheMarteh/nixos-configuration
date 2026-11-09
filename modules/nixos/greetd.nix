@@ -48,6 +48,14 @@ let
     "--power-shutdown 'systemctl poweroff'"
     "--power-reboot 'systemctl reboot'"
   ];
+
+  # tuigreet in een wrapper, zodat het palet ook klopt als je uitlogt na een
+  # themawissel: theme-console.service draaide alleen bij het opstarten, en een
+  # VT-reset tussendoor zet het palet terug naar dat van de initrd.
+  themedTuigreet = pkgs.writeShellScript "tuigreet-themed" ''
+    cat /run/theme/console.seq 2>/dev/null || true
+    exec ${pkgs.tuigreet}/bin/tuigreet ${tuigreetArgs}
+  '';
 in
 {
   # Login via tuigreet (geen autologin, zodat PAM de keyring kan ontgrendelen)
@@ -59,7 +67,7 @@ in
     useTextGreeter = true;
 
     settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet ${tuigreetArgs}";
+      command = "${themedTuigreet}";
       user = "greeter";
     };
   };

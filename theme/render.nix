@@ -343,6 +343,22 @@ in
     error_symbol = "[>](red)"
   '';
 
+  # ---- virtuele console ---------------------------------------------------
+  # De 16 kleuren als ESC]Pn<rrggbb>, de Linux-console-escape die het palet van
+  # één VT zet. Bewust rauwe bytes en geen commentaarregel: dit bestand wordt
+  # ongewijzigd naar een /dev/ttyN geschreven.
+  #
+  # Hiermee volgen de TTY's en tuigreet het gekozen thema zonder rebuild --
+  # tuigreet kleurt namelijk met ANSI-namen, dus het palet van de VT bepaalt
+  # alles. Zie modules/nixos/console.nix voor wie dit toepast.
+  "console.seq" =
+    let
+      esc = builtins.fromJSON "\"\\u001b\"";
+      digits = "0123456789abcdef";
+      setColor = i: "${esc}]P${builtins.substring i 1 digits}${builtins.elemAt palette.ansi i}";
+    in
+    builtins.concatStringsSep "" (builtins.genList setColor 16);
+
   # ---- metadata -----------------------------------------------------------
   # Wordt door `theme-set` gesourcet, zodat dat script niets over de palettes
   # hoeft te weten behalve de mapnaam.

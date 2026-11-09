@@ -125,6 +125,11 @@ hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "a
 --------------------
 
 -- awww-daemon wordt gestart in hyprland.lua; even wachten tot die er is.
+--
+-- Welke achtergrond erbij hoort staat in meta.sh van het actieve thema, en niet
+-- hier: `theme-set` zet hem bij een wissel, maar die aanroep faalt bij het
+-- opstarten (de home-manager-activatie draait nog zonder Hyprland-sessie). Een
+-- hardgecodeerd pad zou het thema van de vorige boot dus elke keer overrulen.
 hl.on("hyprland.start", function()
-    hl.exec_cmd("sleep 0.5 && awww img ~/.config/hypr/wallpapers/wallpaper1.jpg --resize crop --fill-color 000000")
+    hl.exec_cmd([[sleep 0.5 && . ~/.config/current-theme/meta.sh && awww img ~/.config/hypr/wallpapers/"$theme_wallpaper" --resize crop --fill-color 000000]])
 end)

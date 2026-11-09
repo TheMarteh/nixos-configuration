@@ -14,10 +14,12 @@
 #     `theme-set` verzet de symlink ~/.config/current-theme. waybar, rofi,
 #     swaync, Hyprland en alacritty importeren uit die symlink.
 #
-#   Laag B -- vastgezet bij de build. De virtuele console (het palet wordt uit
-#     de initrd gezet) en tuigreet (draait als user `greeter` en kan ~/.config
-#     van steal niet lezen). Die gebruiken `default` hieronder, dus na een
-#     themawissel volgt het inlogscherm pas na de eerstvolgende `nrs`.
+#   Laag B -- de bodem waar laag A bovenop komt. De virtuele console krijgt het
+#     palet hieronder al uit de initrd, en tuigreet kleurt met ANSI-namen en
+#     erft het dus. Daarna zet theme-console.service (modules/nixos/console.nix)
+#     het palet van het gekozen thema alsnog over de VT's heen, zodat ook de
+#     TTY's en het inlogscherm meekleuren. `default` blijft wat je ziet voordat
+#     die service draait en waar hij op terugvalt.
 rec {
   palettes = {
     catppuccin-mocha = import ./palettes/catppuccin-mocha.nix;
