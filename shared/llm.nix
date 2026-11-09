@@ -9,6 +9,11 @@ rec {
   baseUrl = "http://127.0.0.1:${toString port}";
   modelDir = "/srv/models";
 
+  # API-sleutel (alleen de sleutel, eigenaar steal, 0600). Wordt bij de eerste
+  # start aangemaakt door llama-swap-api-key.service; nieuwe sleutel: bestand
+  # verwijderen en `systemctl restart llama-swap`.
+  apiKeyFile = "/etc/llama-swap/api-key";
+
   # Standaardmodel voor agents (OpenCode, claude-local)
   defaultModel = "qwen3.6-35b-a3b";
 

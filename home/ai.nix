@@ -14,7 +14,8 @@ let
   claude-local = pkgs.writeShellScriptBin "claude-local" ''
     model="''${CLAUDE_LOCAL_MODEL:-${llm.defaultModel}}"
     export ANTHROPIC_BASE_URL=${llm.baseUrl}
-    export ANTHROPIC_AUTH_TOKEN=local
+    ANTHROPIC_AUTH_TOKEN="$(cat ${llm.apiKeyFile})" || exit 1
+    export ANTHROPIC_AUTH_TOKEN
     export ANTHROPIC_API_KEY=""
     export ANTHROPIC_MODEL="$model"
     export ANTHROPIC_DEFAULT_OPUS_MODEL="$model"
@@ -54,7 +55,11 @@ in
       provider.llamaswap = {
         npm = "@ai-sdk/openai-compatible";
         name = "llama-swap (lokaal)";
-        options.baseURL = "${llm.baseUrl}/v1";
+        options = {
+          baseURL = "${llm.baseUrl}/v1";
+          # OpenCode leest de sleutel bij het starten uit het bestand
+          apiKey = "{file:${llm.apiKeyFile}}";
+        };
         models = lib.mapAttrs (_: m: {
           inherit (m) name;
           tool_call = true;
