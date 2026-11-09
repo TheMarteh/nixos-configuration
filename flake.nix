@@ -56,6 +56,8 @@
       nixosConfigurations = {
         nixos-steal = nixpkgs.lib.nixosSystem {
           inherit system;
+          # pkgs-unstable ook in NixOS-modules (o.a. llama-cpp in modules/nixos/ai.nix)
+          specialArgs = { inherit pkgs-unstable; };
 
           modules = [
             ./hosts/nixos-steal
