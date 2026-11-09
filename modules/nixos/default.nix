@@ -13,6 +13,7 @@
     ./nvidia.nix
     ./audio.nix
     ./bluetooth.nix
+    ./mdns.nix
     ./docker.nix
     ./virtualisation.nix
     ./fonts.nix
