@@ -3,8 +3,6 @@
 {
   # nvidia-vaapi-driver (video decoding op de GPU) wordt automatisch toegevoegd
   hardware.graphics.enable = true;
-  # Wine en DXVK draaien 32-bit code; zonder deze libs start de Rockstar Launcher niet
-  hardware.graphics.enable32Bit = true;
 
   hardware.nvidia = {
     open = true;

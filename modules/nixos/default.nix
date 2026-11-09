@@ -11,7 +11,6 @@
     ./greetd.nix
     ./keyring.nix
     ./nvidia.nix
-    ./gaming.nix
     ./audio.nix
     ./bluetooth.nix
     ./docker.nix

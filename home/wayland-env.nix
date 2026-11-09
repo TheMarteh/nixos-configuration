@@ -33,11 +33,6 @@ let
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     NVD_BACKEND = "direct";
-
-    # Shader-cache voor Wine/DXVK-games: voorkomt dat dezelfde shaders elke
-    # sessie opnieuw gecompileerd worden (stotters bij het eerste rondje).
-    __GL_SHADER_DISK_CACHE = "1";
-    __GL_SHADER_DISK_CACHE_SIZE = "12000000000"; # 12 GB
   };
 in
 
