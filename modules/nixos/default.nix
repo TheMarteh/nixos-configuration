@@ -14,6 +14,7 @@
     ./audio.nix
     ./bluetooth.nix
     ./mdns.nix
+    ./remote.nix
     ./docker.nix
     ./virtualisation.nix
     ./fonts.nix
