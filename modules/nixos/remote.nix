@@ -29,6 +29,7 @@ in
   # Publieke SSH-sleutels uit 1Password (de privésleutels blijven daar).
   # Eén regel per sleutel, bv. "ssh-ed25519 AAAA... werklaptop".
   users.users.steal.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID/4FzNIIsAXeM7JYWeKv6zExQPeA/qGxj1wiXq1p+ud 1password"
   ];
 
   networking.firewall.interfaces.${tailscale}.allowedTCPPorts = [
